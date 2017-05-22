@@ -100,7 +100,8 @@ class ExpertSender implements LoggerAwareInterface
         $lastName = null,
         $mode = ExpertSenderEnum::MODE_ADD_AND_UPDATE,
         $id = null,
-        $ip = null
+        $ip = null,
+        $phone = null
     ) {
         $args = func_get_args();
 
@@ -125,7 +126,8 @@ class ExpertSender implements LoggerAwareInterface
                 ->setLastName($lastName)
                 ->setMode($mode)
                 ->setId($id)
-                ->setIp($ip);
+                ->setIp($ip)
+                ->setPhone($phone);
         }
 
         // we're going to use it, so we don't want it to be changeable anymore
