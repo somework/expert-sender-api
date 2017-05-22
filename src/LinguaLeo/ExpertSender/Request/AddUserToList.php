@@ -78,6 +78,13 @@ class AddUserToList
      */
     private $properties = [];
 
+    
+    /**
+     * @var string|null
+     */
+    private $phone = null;
+    
+    
     /**
      * @return boolean
      */
@@ -364,6 +371,27 @@ class AddUserToList
     public function getMode()
     {
         return $this->mode;
+    }
+    
+    
+    /**
+     * @param string|null $phone
+     * @return AddUserToList
+     * @throws BadMethodCallException
+     */
+    public function setPhone($phone = null)
+    {
+        $this->exceptionIfFrozen();
+        $this->phone = $phone;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 
     /**
