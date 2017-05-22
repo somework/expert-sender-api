@@ -418,6 +418,10 @@ class ExpertSender implements LoggerAwareInterface
         if ($request->getIp() !== null) {
             $dataChunk->addChunk(new SimpleChunk('Ip', $request->getIp()));
         }
+        
+        if ($request->getPhone() !== null) {
+            $dataChunk->addChunk(new SimpleChunk('Ip', $request->getPhone()));
+        }
 
         $dataChunk->addChunk(new SimpleChunk('Force', $request->getForce() ? 'true' : 'false'));
 
