@@ -127,7 +127,9 @@ class ExpertSender implements LoggerAwareInterface
                 ->setMode($mode)
                 ->setId($id)
                 ->setIp($ip)
-                ->setPhone($phone);
+                ->setPhone($phone)
+                ->setCustomSubscriberId($customSubscriberId)
+                ;
         }
 
         // we're going to use it, so we don't want it to be changeable anymore
