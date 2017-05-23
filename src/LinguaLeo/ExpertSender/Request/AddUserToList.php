@@ -84,6 +84,11 @@ class AddUserToList
      */
     private $phone = null;
     
+        /**
+     * @var string|null
+     */
+    private $customSubscriberId = null;
+    
     
     /**
      * @return boolean
@@ -392,6 +397,28 @@ class AddUserToList
     public function getPhone()
     {
         return $this->phone;
+    }
+    
+    
+            
+    /**
+     * @param string|null $customSubscriberId
+     * @return AddUserToList
+     * @throws BadMethodCallException
+     */
+    public function setCustomSubscriberId($customSubscriberId = null)
+    {
+        $this->exceptionIfFrozen();
+        $this->customSubscriberId = $customSubscriberId;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCustomSubscriberId()
+    {
+        return $this->customSubscriberId;
     }
 
     /**
