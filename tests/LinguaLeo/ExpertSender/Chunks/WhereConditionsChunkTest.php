@@ -7,7 +7,6 @@ use LinguaLeo\ExpertSender\ExpertSenderEnum;
 
 class WhereConditionsChunkTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testGetText()
     {
         $whereChunks = [
@@ -25,6 +24,4 @@ class WhereConditionsChunkTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('<Operator>Like</Operator>', $text);
         $this->assertContains('<Value>1</Value>', $text);
     }
-
 }
- 

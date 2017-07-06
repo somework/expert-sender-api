@@ -6,8 +6,7 @@ use LinguaLeo\ExpertSender\Entities\OrderBy;
 
 class OrderByChunk implements ChunkInterface
 {
-
-    const PATTERN = <<<EOD
+    const PATTERN = <<<'EOD'
         <OrderBy>
             %s
         </OrderBy>
@@ -32,7 +31,7 @@ EOD;
         $text = [];
         $text[] = (new SimpleChunk('Column', $this->orderBy->getColumnName()))->getText();
         $text[] = (new SimpleChunk('Direction', $this->orderBy->getDirection()))->getText();
+
         return sprintf(self::PATTERN, implode(PHP_EOL, $text));
     }
-
 }

@@ -4,7 +4,6 @@ namespace LinguaLeo\ExpertSender\Chunks;
 
 class GroupChunkTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testGetText()
     {
         $groupChunk = new GroupChunk();
@@ -14,6 +13,4 @@ class GroupChunkTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('<Name>Alex</Name>', $text);
         $this->assertContains('<Age>22</Age>', $text);
     }
-
 }
- 

@@ -8,7 +8,7 @@ class Property
     protected $type;
     protected $value;
 
-    function __construct($id, $type, $value)
+    public function __construct($id, $type, $value)
     {
         $this->id = $id;
         $this->type = $type;

@@ -26,7 +26,7 @@ class UserIdResult extends ApiResult
             throw new ExpertSenderException("Can't get user id");
         }
 
-        $this->id = (string)$idXml[0];
+        $this->id = (string) $idXml[0];
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 namespace LinguaLeo\ExpertSender\Chunks;
 
 class DataChunkTest extends \PHPUnit_Framework_TestCase

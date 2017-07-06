@@ -4,7 +4,6 @@ namespace LinguaLeo\ExpertSender\Chunks;
 
 abstract class ArrayChunk implements ChunkInterface
 {
-
     /** @var array */
     protected $chunks = [];
 
@@ -31,9 +30,10 @@ abstract class ArrayChunk implements ChunkInterface
     {
         $texts = [];
         foreach ($this->chunks as $columnChunk) {
-            /** @var ChunkInterface $columnChunk */
+            /* @var ChunkInterface $columnChunk */
             $texts[] = $columnChunk->getText();
         }
+
         return implode("\n", $texts);
     }
 
@@ -49,5 +49,4 @@ abstract class ArrayChunk implements ChunkInterface
      * @return string
      */
     abstract protected function getPattern();
-
-} 
+}

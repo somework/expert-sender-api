@@ -1,4 +1,5 @@
 <?php
+
 namespace LinguaLeo\ExpertSender;
 
 use LinguaLeo\ExpertSender\Entities\Column;
@@ -9,7 +10,6 @@ use LinguaLeo\ExpertSender\Entities\Where;
 
 class ExpertSenderTest extends \PHPUnit_Framework_TestCase
 {
-
     /** @var ExpertSender */
     protected $expertSender;
 
@@ -37,7 +37,7 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
 
     public function getParams()
     {
-        $paramsPath = __DIR__ . '/params.json';
+        $paramsPath = __DIR__.'/params.json';
 
         if (!is_file($paramsPath)) {
             $this->markTestSkipped('params.json is required to run this test');
@@ -55,9 +55,8 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
             }
         }
 
-
         if (!isset($this->params[$param]) || null === $this->params[$param]) {
-            $this->markTestSkipped($param . ' must be configured in params.json to run this test');
+            $this->markTestSkipped($param.' must be configured in params.json to run this test');
         }
 
         return $this->params[$param];
@@ -90,7 +89,7 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
 
     public function testListsOldApi()
     {
-        $randomEmail = sprintf('some_random_%s@gmail.com', rand(0, 100000000000) . rand(0, 1000000000000));
+        $randomEmail = sprintf('some_random_%s@gmail.com', rand(0, 100000000000).rand(0, 1000000000000));
 
         $addResult = $this->expertSender->addUserToList(
             $randomEmail,
@@ -114,7 +113,7 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
 
     public function testLists()
     {
-        $randomEmail = sprintf('some_random_%s@gmail.com', rand(0, 100000000000) . rand(0, 1000000000000));
+        $randomEmail = sprintf('some_random_%s@gmail.com', rand(0, 100000000000).rand(0, 1000000000000));
 
         $trackingCode = 'phpunit'.time();
 
@@ -153,7 +152,7 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
             new Column('name', 'Alex'),
             new Column('age', 22),
             new Column('sex', 1),
-            new Column('created_at', date(DATE_W3C))
+            new Column('created_at', date(DATE_W3C)),
         ]);
         $this->assertTrue($result->isOk());
     }
@@ -186,7 +185,7 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
             new Column('age', 22),
         ], [
             new Column('sex', 0),
-            new Column('created_at', date(DATE_W3C, strtotime('-1 week')))
+            new Column('created_at', date(DATE_W3C, strtotime('-1 week'))),
         ]);
         $this->assertTrue($result->isOk());
     }
@@ -199,15 +198,15 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->expertSender->deleteTableRow($this->getTestTableName(), [
             new Column('name', 'Alex'),
-            new Column('age', 22)
+            new Column('age', 22),
         ]);
         $this->assertTrue($result->isOk());
     }
 
     public function testChangeEmail()
     {
-        $randomEmail = sprintf('some_random_%s@gmail.com', rand(0, 100000000000) . rand(0, 1000000000000));
-        $randomEmail2 = sprintf('some_random_%s@gmail.com', rand(0, 100000000000) . rand(0, 1000000000000));
+        $randomEmail = sprintf('some_random_%s@gmail.com', rand(0, 100000000000).rand(0, 1000000000000));
+        $randomEmail2 = sprintf('some_random_%s@gmail.com', rand(0, 100000000000).rand(0, 1000000000000));
 
         $listId = $this->getTestListId();
 
@@ -237,7 +236,7 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
 
     public function testSendTrigger()
     {
-        $randomEmail = sprintf($this->getTestEmailPattern(), rand(0, 100000000000) . rand(0, 1000000000000));
+        $randomEmail = sprintf($this->getTestEmailPattern(), rand(0, 100000000000).rand(0, 1000000000000));
         $listId = $this->getTestListId();
 
         $this->expertSender->addUserToList(
@@ -254,7 +253,7 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
 
     public function testSendTransactional()
     {
-        $randomEmail = sprintf($this->getTestEmailPattern(), rand(0, 100000000000) . rand(0, 1000000000000));
+        $randomEmail = sprintf($this->getTestEmailPattern(), rand(0, 100000000000).rand(0, 1000000000000));
         $listId = $this->getTestListId();
 
         $this->expertSender->addUserToList(

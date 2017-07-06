@@ -6,7 +6,6 @@ use LinguaLeo\ExpertSender\ApiResult;
 
 class TableDataResult extends ApiResult
 {
-
     /** @var array */
     protected $data = [];
 
@@ -36,11 +35,13 @@ class TableDataResult extends ApiResult
 
     /**
      * @param string $text
+     *
      * @return string
      */
     private function removeBOM($text)
     {
-        $bom = pack('H*','EFBBBF');
+        $bom = pack('H*', 'EFBBBF');
+
         return preg_replace("/^{$bom}/", '', $text);
     }
 
@@ -51,5 +52,4 @@ class TableDataResult extends ApiResult
     {
         return $this->data;
     }
-
-} 
+}

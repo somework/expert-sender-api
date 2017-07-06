@@ -6,8 +6,7 @@ use LinguaLeo\ExpertSender\Entities\Where;
 
 class WhereChunk implements ChunkInterface
 {
-
-    const PATTERN = <<<EOD
+    const PATTERN = <<<'EOD'
         <Where>
             %s
         </Where>
@@ -33,7 +32,7 @@ EOD;
         $text[] = (new SimpleChunk('ColumnName', $this->where->getColumnName()))->getText();
         $text[] = (new SimpleChunk('Operator', $this->where->getOperator()))->getText();
         $text[] = (new SimpleChunk('Value', $this->where->getValue()))->getText();
+
         return sprintf(self::PATTERN, implode(PHP_EOL, $text));
     }
-
-} 
+}

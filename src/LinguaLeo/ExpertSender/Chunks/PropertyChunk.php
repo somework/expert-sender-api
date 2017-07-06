@@ -1,12 +1,12 @@
 <?php
+
 namespace LinguaLeo\ExpertSender\Chunks;
 
 use LinguaLeo\ExpertSender\Entities\Property;
 
 class PropertyChunk implements ChunkInterface
 {
-
-    const PATTERN = <<<EOD
+    const PATTERN = <<<'EOD'
         <Property>
              <Id>%s</Id>
              <Value xsi:type="xs:%s">%s</Value>
@@ -32,5 +32,4 @@ EOD;
             $this->property->getValue()
         );
     }
-
 }

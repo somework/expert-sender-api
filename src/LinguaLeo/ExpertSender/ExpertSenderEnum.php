@@ -1,4 +1,5 @@
 <?php
+
 namespace LinguaLeo\ExpertSender;
 
 class ExpertSenderEnum

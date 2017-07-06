@@ -1,4 +1,5 @@
 <?php
+
 namespace LinguaLeo\ExpertSender;
 
 class HttpTransport
@@ -7,7 +8,7 @@ class HttpTransport
 
     private $context;
 
-    function __construct()
+    public function __construct()
     {
     }
 
@@ -22,10 +23,10 @@ class HttpTransport
     public function query($url, $method = 'GET', $content = null)
     {
         $http = [
-            'method' => $method,
-            'header' => "Content-Type: text/xml\r\n",
-            'timeout' => 30,
-            'ignore_errors' => true
+            'method'        => $method,
+            'header'        => "Content-Type: text/xml\r\n",
+            'timeout'       => 30,
+            'ignore_errors' => true,
         ];
 
         if ($content != null) {
@@ -57,11 +58,11 @@ class HttpTransport
 
     public function get($url, $data)
     {
-        return $this->query($url . '?' . http_build_query($data), 'GET');
+        return $this->query($url.'?'.http_build_query($data), 'GET');
     }
 
     public function delete($url, $data)
     {
-        return $this->query($url . '?' . http_build_query($data), 'DELETE');
+        return $this->query($url.'?'.http_build_query($data), 'DELETE');
     }
 }

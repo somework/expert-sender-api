@@ -1,4 +1,5 @@
 <?php
+
 namespace LinguaLeo\ExpertSender;
 
 class ExpertSenderResponse
@@ -36,7 +37,7 @@ class ExpertSenderResponse
      */
     public function getErrorCode()
     {
-        if (preg_match("~<Code>(.+)</Code>~", $this->body, $matches)) {
+        if (preg_match('~<Code>(.+)</Code>~', $this->body, $matches)) {
             return $matches[1];
         }
 
@@ -45,7 +46,7 @@ class ExpertSenderResponse
 
     public function getErrorMessage()
     {
-        if (preg_match("~<Message>(.+)</Message>~", $this->body, $matches)) {
+        if (preg_match('~<Message>(.+)</Message>~', $this->body, $matches)) {
             return $matches[1];
         }
 

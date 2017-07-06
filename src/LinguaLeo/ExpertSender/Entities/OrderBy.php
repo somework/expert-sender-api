@@ -4,7 +4,6 @@ namespace LinguaLeo\ExpertSender\Entities;
 
 class OrderBy
 {
-
     /** @var string */
     protected $columnName;
     /** @var string */
@@ -35,5 +34,4 @@ class OrderBy
     {
         return $this->direction;
     }
-
-} 
+}

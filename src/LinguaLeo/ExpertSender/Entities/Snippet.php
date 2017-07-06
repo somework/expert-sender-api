@@ -1,4 +1,5 @@
 <?php
+
 namespace LinguaLeo\ExpertSender\Entities;
 
 class Snippet
@@ -31,6 +32,4 @@ class Snippet
     {
         return $this->value;
     }
-
-
 }

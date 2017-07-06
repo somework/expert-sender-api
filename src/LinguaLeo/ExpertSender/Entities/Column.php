@@ -4,7 +4,6 @@ namespace LinguaLeo\ExpertSender\Entities;
 
 class Column
 {
-
     /** @var string */
     protected $name;
     /** @var string */
@@ -43,5 +42,4 @@ class Column
     {
         return $this->value;
     }
-
-} 
+}

@@ -1,4 +1,5 @@
 <?php
+
 namespace LinguaLeo\ExpertSender\Chunks;
 
 use LinguaLeo\ExpertSender\Entities\Snippet;
@@ -18,6 +19,5 @@ class SnippetsChunkTest extends \PHPUnit_Framework_TestCase
 
         $this->assertRegExp('~<Name>test</Name>[\s]+<Value>value</Value>~', $text);
         $this->assertRegExp('~<Name>cdata</Name>[\s]+<Value>[\s\S]+CDATA[\s\S]+<tag>ok</tag>[\s\S]+</Value>~', $text);
-
     }
 }

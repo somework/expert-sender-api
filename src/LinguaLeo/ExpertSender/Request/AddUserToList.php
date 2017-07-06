@@ -2,9 +2,9 @@
 
 namespace LinguaLeo\ExpertSender\Request;
 
+use BadMethodCallException;
 use LinguaLeo\ExpertSender\Entities\Property;
 use LinguaLeo\ExpertSender\ExpertSenderEnum;
-use BadMethodCallException;
 
 /**
  * Represents adding subscriber to list request attributes.
@@ -14,17 +14,17 @@ use BadMethodCallException;
 class AddUserToList
 {
     /**
-     * @var boolean
+     * @var bool
      */
     private $frozen = false;
 
     /**
-     * @var integer|null
+     * @var int|null
      */
     private $listId = null;
 
     /**
-     * @var integer|null
+     * @var int|null
      */
     private $id = null;
 
@@ -64,7 +64,7 @@ class AddUserToList
     private $vendor = null;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $force = false;
 
@@ -78,20 +78,18 @@ class AddUserToList
      */
     private $properties = [];
 
-    
     /**
      * @var string|null
      */
     private $phone = null;
-    
-        /**
+
+    /**
      * @var string|null
      */
     private $customSubscriberId = null;
-    
-    
+
     /**
-     * @return boolean
+     * @return bool
      */
     public function isValid()
     {
@@ -99,7 +97,7 @@ class AddUserToList
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isFrozen()
     {
@@ -107,8 +105,9 @@ class AddUserToList
     }
 
     /**
-     * @return AddUserToList
      * @throws BadMethodCallException
+     *
+     * @return AddUserToList
      */
     public function freeze()
     {
@@ -122,9 +121,11 @@ class AddUserToList
     }
 
     /**
-     * @param integer|null $listId
-     * @return AddUserToList
+     * @param int|null $listId
+     *
      * @throws BadMethodCallException
+     *
+     * @return AddUserToList
      */
     public function setListId($listId = null)
     {
@@ -136,7 +137,7 @@ class AddUserToList
     }
 
     /**
-     * @return integer|null
+     * @return int|null
      */
     public function getListId()
     {
@@ -144,9 +145,11 @@ class AddUserToList
     }
 
     /**
-     * @param integer|null $id
-     * @return AddUserToList
+     * @param int|null $id
+     *
      * @throws BadMethodCallException
+     *
+     * @return AddUserToList
      */
     public function setId($id = null)
     {
@@ -158,7 +161,7 @@ class AddUserToList
     }
 
     /**
-     * @return integer|null
+     * @return int|null
      */
     public function getId()
     {
@@ -167,8 +170,10 @@ class AddUserToList
 
     /**
      * @param string|null $email
-     * @return AddUserToList
+     *
      * @throws BadMethodCallException
+     *
+     * @return AddUserToList
      */
     public function setEmail($email = null)
     {
@@ -189,8 +194,10 @@ class AddUserToList
 
     /**
      * @param string|null $firstName
-     * @return AddUserToList
+     *
      * @throws BadMethodCallException
+     *
+     * @return AddUserToList
      */
     public function setFirstName($firstName = null)
     {
@@ -211,8 +218,10 @@ class AddUserToList
 
     /**
      * @param string|null $lastName
-     * @return AddUserToList
+     *
      * @throws BadMethodCallException
+     *
+     * @return AddUserToList
      */
     public function setLastName($lastName = null)
     {
@@ -233,8 +242,10 @@ class AddUserToList
 
     /**
      * @param string|null $name
-     * @return AddUserToList
+     *
      * @throws BadMethodCallException
+     *
+     * @return AddUserToList
      */
     public function setName($name = null)
     {
@@ -255,8 +266,10 @@ class AddUserToList
 
     /**
      * @param string|null $ip
-     * @return AddUserToList
+     *
      * @throws BadMethodCallException
+     *
+     * @return AddUserToList
      */
     public function setIp($ip = null)
     {
@@ -277,9 +290,11 @@ class AddUserToList
 
     /**
      * @param string|null $trackingCode
-     * @return AddUserToList
+     *
      * @throws BadMethodCallException
      * @throws \InvalidArgumentException
+     *
+     * @return AddUserToList
      */
     public function setTrackingCode($trackingCode = null)
     {
@@ -304,8 +319,10 @@ class AddUserToList
 
     /**
      * @param string|null $vendor
-     * @return AddUserToList
+     *
      * @throws BadMethodCallException
+     *
+     * @return AddUserToList
      */
     public function setVendor($vendor = null)
     {
@@ -325,10 +342,12 @@ class AddUserToList
     }
 
     /**
-     * @param boolean $force
-     * @return AddUserToList
+     * @param bool $force
+     *
      * @throws BadMethodCallException
      * @throws InvalidArgumentException
+     *
+     * @return AddUserToList
      */
     public function setForce($force)
     {
@@ -344,7 +363,7 @@ class AddUserToList
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getForce()
     {
@@ -353,9 +372,11 @@ class AddUserToList
 
     /**
      * @param string $mode
-     * @return AddUserToList
+     *
      * @throws BadMethodCallException
      * @throws \InvalidArgumentException
+     *
+     * @return AddUserToList
      */
     public function setMode($mode)
     {
@@ -377,17 +398,19 @@ class AddUserToList
     {
         return $this->mode;
     }
-    
-    
+
     /**
      * @param string|null $phone
-     * @return AddUserToList
+     *
      * @throws BadMethodCallException
+     *
+     * @return AddUserToList
      */
     public function setPhone($phone = null)
     {
         $this->exceptionIfFrozen();
         $this->phone = $phone;
+
         return $this;
     }
 
@@ -398,18 +421,19 @@ class AddUserToList
     {
         return $this->phone;
     }
-    
-    
-            
+
     /**
      * @param string|null $customSubscriberId
-     * @return AddUserToList
+     *
      * @throws BadMethodCallException
+     *
+     * @return AddUserToList
      */
     public function setCustomSubscriberId($customSubscriberId = null)
     {
         $this->exceptionIfFrozen();
         $this->customSubscriberId = $customSubscriberId;
+
         return $this;
     }
 
@@ -423,8 +447,10 @@ class AddUserToList
 
     /**
      * @param Property $property
-     * @return AddUserToList
+     *
      * @throws BadMethodCallException
+     *
+     * @return AddUserToList
      */
     public function addProperty(Property $property)
     {
@@ -437,8 +463,10 @@ class AddUserToList
 
     /**
      * @param array $properties
-     * @return AddUserToList
+     *
      * @throws BadMethodCallException
+     *
+     * @return AddUserToList
      */
     public function setProperties(array $properties)
     {

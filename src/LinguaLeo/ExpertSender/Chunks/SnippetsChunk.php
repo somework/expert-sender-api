@@ -1,10 +1,10 @@
 <?php
+
 namespace LinguaLeo\ExpertSender\Chunks;
 
 class SnippetsChunk extends ArrayChunk
 {
-
-    const PATTERN = <<<EOD
+    const PATTERN = <<<'EOD'
 <Snippets>
             %s
 </Snippets>
@@ -17,5 +17,4 @@ EOD;
     {
         return self::PATTERN;
     }
-
 }
