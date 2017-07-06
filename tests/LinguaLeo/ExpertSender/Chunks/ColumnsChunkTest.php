@@ -6,13 +6,12 @@ use LinguaLeo\ExpertSender\Entities\Column;
 
 class ColumnsChunkTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testGetText()
     {
         $columnsChunks = [
             new ColumnChunk(new Column('name', 'Alex<br/>Aksef')),
             new ColumnChunk(new Column('sex', 'male')),
-            new ColumnChunk(new Column('age', 22))
+            new ColumnChunk(new Column('age', 22)),
         ];
 
         $columnsChunk = new ColumnsChunk($columnsChunks);
@@ -26,6 +25,4 @@ class ColumnsChunkTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('<Name>age</Name>', $text);
         $this->assertContains('<Value>22</Value>', $text);
     }
-
 }
- 

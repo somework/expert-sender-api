@@ -1,11 +1,12 @@
 <?php
+
 namespace LinguaLeo\ExpertSender\Chunks;
 
 use LinguaLeo\ExpertSender\ExpertSenderResponse;
 
 class ExpertSenderResponseTest extends \PHPUnit_Framework_TestCase
 {
-    CONST ERROR = <<<EOD
+    const ERROR = <<<'EOD'
 <ApiResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <ErrorMessage>
         <Code>401</Code>

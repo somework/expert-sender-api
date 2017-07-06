@@ -4,7 +4,6 @@ namespace LinguaLeo\ExpertSender\Chunks;
 
 class GroupChunk implements ChunkInterface
 {
-
     /** @var ChunkInterface[] */
     protected $chunks = [];
 
@@ -33,7 +32,7 @@ class GroupChunk implements ChunkInterface
         foreach ($this->chunks as $chunk) {
             $text[] = $chunk->getText();
         }
+
         return implode(PHP_EOL, $text);
     }
-
 }

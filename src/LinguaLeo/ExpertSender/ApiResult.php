@@ -1,4 +1,5 @@
 <?php
+
 namespace LinguaLeo\ExpertSender;
 
 class ApiResult
@@ -8,9 +9,8 @@ class ApiResult
     protected $errorMessage;
     protected $response;
 
-
     /**
-     * @param  ExpertSenderResponse $response
+     * @param ExpertSenderResponse $response
      */
     public function __construct($response)
     {

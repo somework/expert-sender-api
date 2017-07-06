@@ -6,8 +6,7 @@ use LinguaLeo\ExpertSender\Entities\Column;
 
 class ColumnChunk implements ChunkInterface
 {
-
-    const PATTERN = <<<EOD
+    const PATTERN = <<<'EOD'
         <Column>
             %s
         </Column>
@@ -39,7 +38,7 @@ EOD;
             $value = sprintf('<![CDATA[%s]]>', $value);
         }
         $text[] = (new SimpleChunk('Value', $value))->getText();
+
         return sprintf(self::PATTERN, implode(PHP_EOL, $text));
     }
-
 }

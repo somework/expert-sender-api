@@ -4,8 +4,7 @@ namespace LinguaLeo\ExpertSender\Chunks;
 
 class PrimaryKeyColumnsChunk extends ArrayChunk
 {
-
-    const PATTERN = <<<EOD
+    const PATTERN = <<<'EOD'
 <PrimaryKeyColumns>
             %s
 </PrimaryKeyColumns>
@@ -15,5 +14,4 @@ EOD;
     {
         return self::PATTERN;
     }
-
 }

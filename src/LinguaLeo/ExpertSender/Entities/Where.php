@@ -4,7 +4,6 @@ namespace LinguaLeo\ExpertSender\Entities;
 
 class Where
 {
-
     /** @var string */
     protected $columnName;
     /** @var string */
@@ -47,5 +46,4 @@ class Where
     {
         return $this->value;
     }
-
-} 
+}

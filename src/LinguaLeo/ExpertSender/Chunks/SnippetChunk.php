@@ -1,13 +1,12 @@
 <?php
+
 namespace LinguaLeo\ExpertSender\Chunks;
 
 use LinguaLeo\ExpertSender\Entities\Snippet;
-use LinguaLeo\ExpertSender\ExpertSenderException;
 
 class SnippetChunk implements ChunkInterface
 {
-
-    const PATTERN = <<<EOD
+    const PATTERN = <<<'EOD'
         <Snippet>
             <Name>%s</Name>
             <Value>%s</Value>
@@ -26,5 +25,4 @@ EOD;
     {
         return sprintf(self::PATTERN, $this->snippet->getName(), $this->snippet->getValue());
     }
-
 }

@@ -2,11 +2,9 @@
 
 namespace LinguaLeo\ExpertSender\Chunks;
 
-
 class WhereConditionsChunk extends ArrayChunk
 {
-
-    const PATTERN = <<<EOD
+    const PATTERN = <<<'EOD'
 <WhereConditions>
             %s
 </WhereConditions>
@@ -19,5 +17,4 @@ EOD;
     {
         return self::PATTERN;
     }
-
 }

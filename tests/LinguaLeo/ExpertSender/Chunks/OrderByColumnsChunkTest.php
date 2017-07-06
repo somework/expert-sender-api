@@ -7,12 +7,11 @@ use LinguaLeo\ExpertSender\ExpertSenderEnum;
 
 class OrderByColumnsChunkTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testGetText()
     {
         $orderByChunks = [
             new OrderByChunk(new OrderBy('name', ExpertSenderEnum::ORDER_ASCENDING)),
-            new OrderByChunk(new OrderBy('sex', ExpertSenderEnum::ORDER_DESCENDING))
+            new OrderByChunk(new OrderBy('sex', ExpertSenderEnum::ORDER_DESCENDING)),
         ];
         $columnsChunk = new OrderByColumnsChunk($orderByChunks);
         $text = $columnsChunk->getText();
@@ -23,6 +22,4 @@ class OrderByColumnsChunkTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('<Column>sex</Column>', $text);
         $this->assertContains('<Direction>Descending</Direction>', $text);
     }
-
 }
- 

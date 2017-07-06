@@ -4,8 +4,7 @@ namespace LinguaLeo\ExpertSender\Chunks;
 
 class ReceiversChunk extends ArrayChunk
 {
-
-    const PATTERN = <<<EOD
+    const PATTERN = <<<'EOD'
 <Receivers>
             %s
 </Receivers>
@@ -18,5 +17,4 @@ EOD;
     {
         return self::PATTERN;
     }
-
 }

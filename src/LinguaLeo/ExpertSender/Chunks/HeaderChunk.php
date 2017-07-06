@@ -1,10 +1,10 @@
 <?php
+
 namespace LinguaLeo\ExpertSender\Chunks;
 
 class HeaderChunk implements ChunkInterface
 {
-
-    const PATTERN = <<<EOD
+    const PATTERN = <<<'EOD'
 <ApiRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <ApiKey>%s</ApiKey>
 %s
@@ -17,7 +17,7 @@ EOD;
     protected $apiKey;
 
     /**
-     * @param string $apiKey
+     * @param string         $apiKey
      * @param ChunkInterface $bodyChunk
      */
     public function __construct($apiKey, ChunkInterface $bodyChunk)
@@ -33,5 +33,4 @@ EOD;
     {
         return sprintf(self::PATTERN, $this->apiKey, $this->bodyChunk->getText());
     }
-
 }

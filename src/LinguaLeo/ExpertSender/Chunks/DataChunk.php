@@ -1,10 +1,10 @@
 <?php
+
 namespace LinguaLeo\ExpertSender\Chunks;
 
 class DataChunk extends ArrayChunk
 {
-
-    const PATTERN = <<<EOD
+    const PATTERN = <<<'EOD'
     <Data %s>
 %s
     </Data>
@@ -29,6 +29,7 @@ EOD;
     public function getText()
     {
         $xsiType = $this->xsiType ? sprintf('xsi:type="%s"', $this->xsiType) : '';
+
         return sprintf($this->getPattern(), $xsiType, $this->getSubChunksText());
     }
 
@@ -39,5 +40,4 @@ EOD;
     {
         return self::PATTERN;
     }
-
 }

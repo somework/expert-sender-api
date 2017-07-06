@@ -4,8 +4,7 @@ namespace LinguaLeo\ExpertSender\Chunks;
 
 class OrderByColumnsChunk extends ArrayChunk
 {
-
-    const PATTERN = <<<EOD
+    const PATTERN = <<<'EOD'
 <OrderByColumns>
             %s
 </OrderByColumns>
@@ -18,5 +17,4 @@ EOD;
     {
         return self::PATTERN;
     }
-
-} 
+}

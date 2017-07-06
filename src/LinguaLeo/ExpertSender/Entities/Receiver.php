@@ -1,4 +1,5 @@
 <?php
+
 namespace LinguaLeo\ExpertSender\Entities;
 
 use LinguaLeo\ExpertSender\ExpertSenderException;
@@ -8,10 +9,10 @@ class Receiver
     protected $email;
     protected $id;
 
-    function __construct($email = null, $id = null)
+    public function __construct($email = null, $id = null)
     {
         if ($email == null && $id == null) {
-            throw new ExpertSenderException("Email or id parameter required");
+            throw new ExpertSenderException('Email or id parameter required');
         }
 
         $this->email = $email;
