@@ -100,7 +100,8 @@ class ExpertSender implements LoggerAwareInterface
         $lastName = null,
         $mode = ExpertSenderEnum::MODE_ADD_AND_UPDATE,
         $id = null,
-        $ip = null
+        $ip = null,
+        $phone = null
     ) {
         $args = func_get_args();
 
@@ -125,7 +126,10 @@ class ExpertSender implements LoggerAwareInterface
                 ->setLastName($lastName)
                 ->setMode($mode)
                 ->setId($id)
-                ->setIp($ip);
+                ->setIp($ip)
+                ->setPhone($phone)
+                ->setCustomSubscriberId($customSubscriberId)
+                ;
         }
 
         // we're going to use it, so we don't want it to be changeable anymore
@@ -415,6 +419,14 @@ class ExpertSender implements LoggerAwareInterface
 
         if ($request->getIp() !== null) {
             $dataChunk->addChunk(new SimpleChunk('Ip', $request->getIp()));
+        }
+        
+        if ($request->getPhone() !== null) {
+            $dataChunk->addChunk(new SimpleChunk('Phone', $request->getPhone()));
+        }
+        
+        if ($request->getCustomSubscriberId() !== null) {
+            $dataChunk->addChunk(new SimpleChunk('CustomSubscriberId', $request->getCustomSubscriberId()));
         }
 
         $dataChunk->addChunk(new SimpleChunk('Force', $request->getForce() ? 'true' : 'false'));

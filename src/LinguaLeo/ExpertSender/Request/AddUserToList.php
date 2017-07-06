@@ -78,6 +78,18 @@ class AddUserToList
      */
     private $properties = [];
 
+    
+    /**
+     * @var string|null
+     */
+    private $phone = null;
+    
+        /**
+     * @var string|null
+     */
+    private $customSubscriberId = null;
+    
+    
     /**
      * @return boolean
      */
@@ -364,6 +376,49 @@ class AddUserToList
     public function getMode()
     {
         return $this->mode;
+    }
+    
+    
+    /**
+     * @param string|null $phone
+     * @return AddUserToList
+     * @throws BadMethodCallException
+     */
+    public function setPhone($phone = null)
+    {
+        $this->exceptionIfFrozen();
+        $this->phone = $phone;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+    
+    
+            
+    /**
+     * @param string|null $customSubscriberId
+     * @return AddUserToList
+     * @throws BadMethodCallException
+     */
+    public function setCustomSubscriberId($customSubscriberId = null)
+    {
+        $this->exceptionIfFrozen();
+        $this->customSubscriberId = $customSubscriberId;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCustomSubscriberId()
+    {
+        return $this->customSubscriberId;
     }
 
     /**
