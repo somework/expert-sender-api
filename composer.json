@@ -8,10 +8,9 @@
             "email": "e.kawalec@s4studio.pl"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.4.0",
-        "psr/log": "1.0.0"
+        "psr/log": "^1.0"
     },
     "require-dev" : {
         "phpunit/phpunit" : "*"
