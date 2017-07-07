@@ -88,7 +88,6 @@ class ExpertSender implements LoggerAwareInterface
             'POST',
             $this->getUrl(ExpertSenderEnum::URL_SUBSCRIBERS),
             [
-                RequestOptions::TIMEOUT => 30,
                 RequestOptions::HEADERS => [
                     'Content-Type' => 'text/xml',
                 ],
@@ -122,7 +121,6 @@ class ExpertSender implements LoggerAwareInterface
             'DELETE',
             $this->getUrl(ExpertSenderEnum::URL_SUBSCRIBERS),
             [
-                RequestOptions::TIMEOUT => 30,
                 RequestOptions::HEADERS => [
                     'Content-Type' => 'text/xml',
                 ],
@@ -153,7 +151,6 @@ class ExpertSender implements LoggerAwareInterface
             'GET',
             $this->getUrl(ExpertSenderEnum::URL_SUBSCRIBERS),
             [
-                RequestOptions::TIMEOUT => 30,
                 RequestOptions::HEADERS => [
                     'Content-Type' => 'text/xml',
                 ],
@@ -192,7 +189,6 @@ class ExpertSender implements LoggerAwareInterface
             'POST',
             $this->getUrl(ExpertSenderEnum::URL_ADD_TABLE_ROW),
             [
-                RequestOptions::TIMEOUT => 30,
                 RequestOptions::HEADERS => [
                     'Content-Type' => 'text/xml',
                 ],
@@ -255,7 +251,6 @@ class ExpertSender implements LoggerAwareInterface
             'POST',
             $this->getUrl(ExpertSenderEnum::URL_GET_TABLE_DATA),
             [
-                RequestOptions::TIMEOUT => 30,
                 RequestOptions::HEADERS => [
                     'Content-Type' => 'text/xml',
                 ],
@@ -297,7 +292,6 @@ class ExpertSender implements LoggerAwareInterface
             'POST',
             $this->getUrl(ExpertSenderEnum::URL_UPDATE_TABLE_ROW),
             [
-                RequestOptions::TIMEOUT => 30,
                 RequestOptions::HEADERS => [
                     'Content-Type' => 'text/xml',
                 ],
@@ -334,7 +328,6 @@ class ExpertSender implements LoggerAwareInterface
             'POST',
             $this->getUrl(ExpertSenderEnum::URL_DELETE_TABLE_ROW),
             [
-                RequestOptions::TIMEOUT => 30,
                 RequestOptions::HEADERS => [
                     'Content-Type' => 'text/xml',
                 ],
@@ -401,7 +394,6 @@ class ExpertSender implements LoggerAwareInterface
             'POST',
             $this->getUrl(ExpertSenderEnum::URL_TRIGGER_PATTERN, $triggerId),
             [
-                RequestOptions::TIMEOUT => 30,
                 RequestOptions::HEADERS => [
                     'Content-Type' => 'text/xml',
                 ],
@@ -442,7 +434,6 @@ class ExpertSender implements LoggerAwareInterface
             'POST',
             $this->getUrl(ExpertSenderEnum::URL_TRANSACTIONAL_PATTERN, $transactionId),
             [
-                RequestOptions::TIMEOUT => 30,
                 RequestOptions::HEADERS => [
                     'Content-Type' => 'text/xml',
                 ],
