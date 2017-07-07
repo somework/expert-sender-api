@@ -131,7 +131,7 @@ class AddUserToList
     {
         $this->exceptionIfFrozen();
 
-        $this->listId = null === $listId ? null : (int)$listId;
+        $this->listId = null === $listId ? null : (int) $listId;
 
         return $this;
     }
@@ -155,7 +155,7 @@ class AddUserToList
     {
         $this->exceptionIfFrozen();
 
-        $this->id = null === $id ? null : (int)$id;
+        $this->id = null === $id ? null : (int) $id;
 
         return $this;
     }
@@ -383,7 +383,7 @@ class AddUserToList
         $this->exceptionIfFrozen();
 
         if (!in_array($mode, ExpertSenderEnum::getModes(), true)) {
-            throw new \InvalidArgumentException('Invalid mode: ' . $mode);
+            throw new \InvalidArgumentException('Invalid mode: '.$mode);
         }
 
         $this->mode = $mode;

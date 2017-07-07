@@ -58,11 +58,11 @@ class HttpTransport
 
     public function get($url, $data)
     {
-        return $this->query($url . '?' . http_build_query($data), 'GET');
+        return $this->query($url.'?'.http_build_query($data), 'GET');
     }
 
     public function delete($url, $data)
     {
-        return $this->query($url . '?' . http_build_query($data), 'DELETE');
+        return $this->query($url.'?'.http_build_query($data), 'DELETE');
     }
 }
