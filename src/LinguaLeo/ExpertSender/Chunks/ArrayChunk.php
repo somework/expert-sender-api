@@ -26,6 +26,14 @@ abstract class ArrayChunk implements ChunkInterface
     /**
      * @return string
      */
+    public function getText()
+    {
+        return $this->chunks ? sprintf($this->getPattern(), $this->getSubChunksText()) : '';
+    }
+
+    /**
+     * @return string
+     */
     protected function getSubChunksText()
     {
         $texts = [];
@@ -35,14 +43,6 @@ abstract class ArrayChunk implements ChunkInterface
         }
 
         return implode("\n", $texts);
-    }
-
-    /**
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->chunks ? sprintf($this->getPattern(), $this->getSubChunksText()) : '';
     }
 
     /**

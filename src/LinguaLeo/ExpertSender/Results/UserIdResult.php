@@ -22,11 +22,11 @@ class UserIdResult extends ApiResult
         $xml = new \SimpleXMLElement($body);
 
         $idXml = $xml->xpath('/ApiResponse/Data/Id');
-        if (!is_array($idXml) || count($idXml) == 0) {
+        if (!is_array($idXml) || count($idXml) === 0) {
             throw new ExpertSenderException("Can't get user id");
         }
 
-        $this->id = (string) $idXml[0];
+        $this->id = (string)$idXml[0];
     }
 
     /**

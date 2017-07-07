@@ -10,10 +10,9 @@ class Snippet
     public function __construct($name, $value, $isHtml = false)
     {
         $this->name = $name;
+        $this->value = $value;
         if ($isHtml) {
             $this->value = sprintf('<![CDATA[%s]]>', $value);
-        } else {
-            $this->value = $value;
         }
     }
 

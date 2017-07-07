@@ -29,7 +29,7 @@ class ApiResult
 
     public function isOk()
     {
-        return $this->errorCode == 0;
+        return $this->errorCode === 0;
     }
 
     /**

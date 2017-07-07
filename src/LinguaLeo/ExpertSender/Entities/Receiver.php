@@ -11,7 +11,7 @@ class Receiver
 
     public function __construct($email = null, $id = null)
     {
-        if ($email == null && $id == null) {
+        if ($email === null && $id === null) {
             throw new ExpertSenderException('Email or id parameter required');
         }
 

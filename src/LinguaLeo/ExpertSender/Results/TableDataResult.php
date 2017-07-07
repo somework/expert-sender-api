@@ -18,10 +18,18 @@ class TableDataResult extends ApiResult
         $this->parse();
     }
 
+    /**
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
     protected function parse()
     {
         $response = $this->removeBOM($this->response->getBody());
-        if (!$this->response->isOk() || !$response) {
+        if (!$response || !$this->response->isOk()) {
             return;
         }
         $temp = tmpfile();
@@ -43,13 +51,5 @@ class TableDataResult extends ApiResult
         $bom = pack('H*', 'EFBBBF');
 
         return preg_replace("/^{$bom}/", '', $text);
-    }
-
-    /**
-     * @return array
-     */
-    public function getData()
-    {
-        return $this->data;
     }
 }

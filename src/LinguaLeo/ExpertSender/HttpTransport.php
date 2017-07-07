@@ -29,7 +29,7 @@ class HttpTransport
             'ignore_errors' => true,
         ];
 
-        if ($content != null) {
+        if ($content !== null) {
             $http['content'] = $content;
         }
 
@@ -43,7 +43,7 @@ class HttpTransport
         $headers = $http_response_header;
         $responseCode = 500;
         foreach ($headers as $header) {
-            if (preg_match('~HTTP.+ ([0-9]+).+~', $header, $matches)) {
+            if (preg_match('~HTTP.+ ([\d]+).+~', $header, $matches)) {
                 $responseCode = $matches[1];
             }
         }
@@ -58,11 +58,11 @@ class HttpTransport
 
     public function get($url, $data)
     {
-        return $this->query($url.'?'.http_build_query($data), 'GET');
+        return $this->query($url . '?' . http_build_query($data), 'GET');
     }
 
     public function delete($url, $data)
     {
-        return $this->query($url.'?'.http_build_query($data), 'DELETE');
+        return $this->query($url . '?' . http_build_query($data), 'DELETE');
     }
 }

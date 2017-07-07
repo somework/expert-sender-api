@@ -24,12 +24,12 @@ EOD;
     {
         $textStrings = [];
 
-        if ($this->receiver->getId() != null) {
+        if ($this->receiver->getId() !== null) {
             $chunk = new SimpleChunk('Id', $this->receiver->getId());
             $textStrings[] = $chunk->getText();
         }
 
-        if ($this->receiver->getEmail() != null) {
+        if ($this->receiver->getEmail() !== null) {
             $chunk = new SimpleChunk('Email', $this->receiver->getEmail());
             $textStrings[] = $chunk->getText();
         }

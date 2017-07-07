@@ -21,12 +21,13 @@ use LinguaLeo\ExpertSender\Chunks\SnippetsChunk;
 use LinguaLeo\ExpertSender\Chunks\WhereChunk;
 use LinguaLeo\ExpertSender\Chunks\WhereConditionsChunk;
 use LinguaLeo\ExpertSender\Entities\Column;
+use LinguaLeo\ExpertSender\Request\AddUserToList;
 use LinguaLeo\ExpertSender\Results\TableDataResult;
 use LinguaLeo\ExpertSender\Results\UserIdResult;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
+use Psr\Log\LogLevel;
 
 class ExpertSender implements LoggerAwareInterface
 {
@@ -44,34 +45,33 @@ class ExpertSender implements LoggerAwareInterface
     protected $deleteTableRowUrl;
     protected $updateTableRowUrl;
     protected $getTableDataUrl;
+    protected $transactionalUrlPattern;
 
     /**
-     * @param $endpointUrl - url without /Api
-     * @param $apiKey
-     * @param $transport
+     * @param string                   $endpointUrl - url without /Api
+     * @param string                   $apiKey
+     * @param HttpTransport            $transport
      * @param \Psr\Log\LoggerInterface $logger
      */
-    public function __construct($endpointUrl, $apiKey, $transport = null, LoggerInterface $logger = null)
+    public function __construct($endpointUrl, $apiKey, HttpTransport $transport = null, LoggerInterface $logger = null)
     {
-        if ($endpointUrl[strlen($endpointUrl) - 1] != '/') {
-            $endpointUrl .= '/';
-        }
+        $endpointUrl = rtrim($endpointUrl, '/') . '/';
 
         if ($transport === null) {
             $transport = new HttpTransport();
         }
 
-        $this->endpointUrl = $endpointUrl.'Api/';
-        $this->subscribersUrl = $this->endpointUrl.'Subscribers';
-        $this->triggerUrlPattern = $this->endpointUrl.'Triggers/%s';
-        $this->transactionalUrlPattern = $this->endpointUrl.'Transactionals/%s';
-        $this->addTableRowUrl = $this->endpointUrl.'DataTablesAddRow';
-        $this->deleteTableRowUrl = $this->endpointUrl.'DataTablesDeleteRow';
-        $this->updateTableRowUrl = $this->endpointUrl.'DataTablesUpdateRow';
-        $this->getTableDataUrl = $this->endpointUrl.'DataTablesGetData';
+        $this->endpointUrl = $endpointUrl . 'Api/';
+        $this->subscribersUrl = $this->endpointUrl . 'Subscribers';
+        $this->triggerUrlPattern = $this->endpointUrl . 'Triggers/%s';
+        $this->transactionalUrlPattern = $this->endpointUrl . 'Transactionals/%s';
+        $this->addTableRowUrl = $this->endpointUrl . 'DataTablesAddRow';
+        $this->deleteTableRowUrl = $this->endpointUrl . 'DataTablesDeleteRow';
+        $this->updateTableRowUrl = $this->endpointUrl . 'DataTablesUpdateRow';
+        $this->getTableDataUrl = $this->endpointUrl . 'DataTablesGetData';
         $this->apiKey = $apiKey;
         $this->transport = $transport;
-        $this->logger = $logger ?: new NullLogger();
+        $this->logger = $logger;
     }
 
     /**
@@ -87,52 +87,14 @@ class ExpertSender implements LoggerAwareInterface
      *
      * Calls with many arguments are deprecated. Pass Request\AddUserToList instead.
      *
-     * @todo Remove many arguments, accept Request\AddUserToList only.
      *
-     * @param Request\AddUserToList $request
+     * @param \LinguaLeo\ExpertSender\Request\AddUserToList $request
      *
+     * @return \LinguaLeo\ExpertSender\ApiResult
      * @throws \BadMethodCallException
-     *
-     * @return ApiResult
      */
-    public function addUserToList(
-        $email = null,
-        $listId = null,
-        array $properties = [],
-        $firstName = null,
-        $lastName = null,
-        $mode = ExpertSenderEnum::MODE_ADD_AND_UPDATE,
-        $id = null,
-        $ip = null,
-        $phone = null
-    ) {
-        $args = func_get_args();
-
-        if (isset($args[0]) && $args[0] instanceof Request\AddUserToList) {
-            if (count($args) > 1) {
-                throw new \BadMethodCallException();
-            }
-
-            $request = $args[0];
-        } else {
-            $this->logger->warning(sprintf(
-                'Deprecated passing many arguments to %s. Use %s object instead.',
-                'ExpertSender->addUserToList()',
-                'Request\AddUserToList'
-            ));
-
-            $request = (new Request\AddUserToList())
-                ->setEmail($email)
-                ->setListId($listId)
-                ->setProperties($properties)
-                ->setFirstName($firstName)
-                ->setLastName($lastName)
-                ->setMode($mode)
-                ->setId($id)
-                ->setIp($ip)
-                ->setPhone($phone)
-                ->setCustomSubscriberId($customSubscriberId);
-        }
+    public function addUserToList(AddUserToList $request)
+    {
 
         // we're going to use it, so we don't want it to be changeable anymore
         // (mutable object -> value object)
@@ -150,7 +112,7 @@ class ExpertSender implements LoggerAwareInterface
     }
 
     /**
-     * @param $email
+     * @param     $email
      * @param int $listId
      *
      * @return ApiResult
@@ -159,7 +121,7 @@ class ExpertSender implements LoggerAwareInterface
     {
         $data = $this->getBaseData();
         $data['email'] = $email;
-        if ($listId != null) {
+        if ($listId !== null) {
             $data['listId'] = $listId;
         }
 
@@ -217,7 +179,7 @@ class ExpertSender implements LoggerAwareInterface
     }
 
     /**
-     * @param $tableName
+     * @param       $tableName
      * @param array $columns
      * @param array $where
      * @param array $orderBy
@@ -254,7 +216,7 @@ class ExpertSender implements LoggerAwareInterface
             $groupChunk->addChunk(new OrderByColumnsChunk($orderByChunks));
         }
         if ($limit) {
-            $limitChunk = new SimpleChunk('Limit', (int) $limit);
+            $limitChunk = new SimpleChunk('Limit', (int)$limit);
             $groupChunk->addChunk($limitChunk);
         }
         $headerChunk = $this->getHeaderChunk($groupChunk);
@@ -325,6 +287,8 @@ class ExpertSender implements LoggerAwareInterface
      * @param $to
      *
      * @return ApiResult
+     * @throws \InvalidArgumentException
+     * @throws \BadMethodCallException
      */
     public function changeEmail($listId, $from, $to)
     {
@@ -345,12 +309,12 @@ class ExpertSender implements LoggerAwareInterface
     }
 
     /**
-     * @param $triggerId
-     * @param $receivers
+     * @param int   $triggerId
+     * @param array $receivers
      *
      * @return \LinguaLeo\ExpertSender\ApiResult
      */
-    public function sendTrigger($triggerId, $receivers)
+    public function sendTrigger($triggerId, array $receivers)
     {
         $receiverChunks = [];
         foreach ($receivers as $receiver) {
@@ -372,13 +336,13 @@ class ExpertSender implements LoggerAwareInterface
     }
 
     /**
-     * @param $transactionId
-     * @param $receiver
-     * @param $snippets
+     * @param       $transactionId
+     * @param       $receiver
+     * @param array $snippets
      *
      * @return \LinguaLeo\ExpertSender\ApiResult
      */
-    public function sendTransactional($transactionId, $receiver, $snippets)
+    public function sendTransactional($transactionId, $receiver, array $snippets = [])
     {
         $snippetChunks = [];
         foreach ($snippets as $snippet) {
@@ -487,16 +451,11 @@ class ExpertSender implements LoggerAwareInterface
      */
     protected function logApiResult($method, ApiResult $result)
     {
-        if ($result->isOk()) {
+        if ($this->logger === null) {
             return;
         }
 
-        $this->logger->error(
-            sprintf(
-                'ES method "%s" error response: %s.',
-                $method,
-                json_encode((array) $result, JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT)
-            )
-        );
+        $level = $result->isOk() ? LogLevel::INFO : LogLevel::ERROR;
+        $this->logger->log($level, sprintf('ES method "%s"', $method), (array)$result);
     }
 }

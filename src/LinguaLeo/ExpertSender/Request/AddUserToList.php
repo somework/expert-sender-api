@@ -21,47 +21,47 @@ class AddUserToList
     /**
      * @var int|null
      */
-    private $listId = null;
+    private $listId;
 
     /**
      * @var int|null
      */
-    private $id = null;
+    private $id;
 
     /**
      * @var string|null
      */
-    private $email = null;
+    private $email;
 
     /**
      * @var string|null
      */
-    private $firstName = null;
+    private $firstName;
 
     /**
      * @var string|null
      */
-    private $lastName = null;
+    private $lastName;
 
     /**
      * @var string|null
      */
-    private $name = null;
+    private $name;
 
     /**
      * @var string|null
      */
-    private $ip = null;
+    private $ip;
 
     /**
      * @var string|null
      */
-    private $trackingCode = null;
+    private $trackingCode;
 
     /**
      * @var string|null
      */
-    private $vendor = null;
+    private $vendor;
 
     /**
      * @var bool
@@ -81,12 +81,12 @@ class AddUserToList
     /**
      * @var string|null
      */
-    private $phone = null;
+    private $phone;
 
     /**
      * @var string|null
      */
-    private $customSubscriberId = null;
+    private $customSubscriberId;
 
     /**
      * @return bool
@@ -131,7 +131,7 @@ class AddUserToList
     {
         $this->exceptionIfFrozen();
 
-        $this->listId = null === $listId ? null : (int) $listId;
+        $this->listId = null === $listId ? null : (int)$listId;
 
         return $this;
     }
@@ -155,7 +155,7 @@ class AddUserToList
     {
         $this->exceptionIfFrozen();
 
-        $this->id = null === $id ? null : (int) $id;
+        $this->id = null === $id ? null : (int)$id;
 
         return $this;
     }
@@ -345,7 +345,7 @@ class AddUserToList
      * @param bool $force
      *
      * @throws BadMethodCallException
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      *
      * @return AddUserToList
      */
@@ -382,8 +382,8 @@ class AddUserToList
     {
         $this->exceptionIfFrozen();
 
-        if (!in_array($mode, ExpertSenderEnum::getModes())) {
-            throw new \InvalidArgumentException('Invalid mode: '.$mode);
+        if (!in_array($mode, ExpertSenderEnum::getModes(), true)) {
+            throw new \InvalidArgumentException('Invalid mode: ' . $mode);
         }
 
         $this->mode = $mode;
