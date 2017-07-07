@@ -40,8 +40,8 @@ class AddUserToListTest extends TestCase
      */
     public function testValuesAreSet($field, $value)
     {
-        $setter = 'set' . ucfirst($field);
-        $getter = 'get' . ucfirst($field);
+        $setter = 'set'.ucfirst($field);
+        $getter = 'get'.ucfirst($field);
 
         $this->request->$setter($value);
 
@@ -83,7 +83,7 @@ class AddUserToListTest extends TestCase
 
         $this->request->freeze();
 
-        $setter = 'set' . ucfirst($field);
+        $setter = 'set'.ucfirst($field);
 
         $this->request->$setter($value);
     }

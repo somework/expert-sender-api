@@ -40,7 +40,7 @@ class ExpertSenderTest extends TestCase
 
     public function getParams()
     {
-        $paramsPath = __DIR__ . '/params.json';
+        $paramsPath = __DIR__.'/params.json';
 
         if (!is_file($paramsPath)) {
             $this->markTestSkipped('params.json is required to run this test');
@@ -59,7 +59,7 @@ class ExpertSenderTest extends TestCase
         }
 
         if (!isset($this->params[$param])) {
-            $this->markTestSkipped($param . ' must be configured in params.json to run this test');
+            $this->markTestSkipped($param.' must be configured in params.json to run this test');
         }
 
         return $this->params[$param];
@@ -92,9 +92,9 @@ class ExpertSenderTest extends TestCase
 
     public function testLists()
     {
-        $randomEmail = sprintf('some_random_%s@gmail.com', mt_rand(0, 100000000000) . mt_rand(0, 1000000000000));
+        $randomEmail = sprintf('some_random_%s@gmail.com', mt_rand(0, 100000000000).mt_rand(0, 1000000000000));
 
-        $trackingCode = 'phpunit' . time();
+        $trackingCode = 'phpunit'.time();
 
         $request = (new Request\AddUserToList())
             ->setEmail($randomEmail)
@@ -184,8 +184,8 @@ class ExpertSenderTest extends TestCase
 
     public function testChangeEmail()
     {
-        $randomEmail = sprintf('some_random_%s@gmail.com', mt_rand(0, 100000000000) . mt_rand(0, 1000000000000));
-        $randomEmail2 = sprintf('some_random_%s@gmail.com', mt_rand(0, 100000000000) . mt_rand(0, 1000000000000));
+        $randomEmail = sprintf('some_random_%s@gmail.com', mt_rand(0, 100000000000).mt_rand(0, 1000000000000));
+        $randomEmail2 = sprintf('some_random_%s@gmail.com', mt_rand(0, 100000000000).mt_rand(0, 1000000000000));
 
         $listId = $this->getTestListId();
 
@@ -215,7 +215,7 @@ class ExpertSenderTest extends TestCase
 
     public function testSendTrigger()
     {
-        $randomEmail = sprintf($this->getTestEmailPattern(), mt_rand(0, 100000000000) . mt_rand(0, 1000000000000));
+        $randomEmail = sprintf($this->getTestEmailPattern(), mt_rand(0, 100000000000).mt_rand(0, 1000000000000));
         $listId = $this->getTestListId();
 
         $addUserToList = (new AddUserToList())
@@ -232,7 +232,7 @@ class ExpertSenderTest extends TestCase
 
     public function testSendTransactional()
     {
-        $randomEmail = sprintf($this->getTestEmailPattern(), mt_rand(0, 100000000000) . mt_rand(0, 1000000000000));
+        $randomEmail = sprintf($this->getTestEmailPattern(), mt_rand(0, 100000000000).mt_rand(0, 1000000000000));
         $listId = $this->getTestListId();
 
         $addUserToList = (new AddUserToList())

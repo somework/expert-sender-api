@@ -72,10 +72,10 @@ class ApiResult
         try {
             $content = $this->response->getBody()->getContents();
             if (preg_match('~<Code>(.+)</Code>~', $content, $matches)) {
-                $this->errorCode = (int)$matches[1];
+                $this->errorCode = (int) $matches[1];
             }
             if (preg_match('~<Message>(.+)</Message>~', $content, $matches)) {
-                $this->errorMessage = (string)$matches[1];
+                $this->errorMessage = (string) $matches[1];
             }
         } catch (\RuntimeException $exception) {
             $this->errorCode = 500;

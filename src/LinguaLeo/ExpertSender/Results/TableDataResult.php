@@ -28,7 +28,7 @@ class TableDataResult extends ApiResult
 
     protected function parse()
     {
-        if($this->isOk()) {
+        if ($this->isOk()) {
             $response = $this->removeBOM($this->response->getBody()->getContents());
             $temp = tmpfile();
             fwrite($temp, $response);
