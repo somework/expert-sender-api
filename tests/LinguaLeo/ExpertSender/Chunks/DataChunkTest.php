@@ -9,7 +9,7 @@ class DataChunkTest extends TestCase
     public function testGetText()
     {
         /**
-         * @var SimpleChunk|\PHPUnit_Framework_MockObject_MockObject $bodyChunk1
+         * @var SimpleChunk|\PHPUnit_Framework_MockObject_MockObject
          * @var SimpleChunk|\PHPUnit_Framework_MockObject_MockObject $bodyChunk2
          */
         $bodyChunk1 = $this

@@ -9,7 +9,7 @@ class HeaderChunkTest extends TestCase
     public function testGetText()
     {
         /**
-         * @var SimpleChunk|\PHPUnit_Framework_MockObject_MockObject $bodyChunk
+         * @var SimpleChunk|\PHPUnit_Framework_MockObject_MockObject
          */
         $bodyChunk = $this
             ->getMockBuilder(SimpleChunk::class)
