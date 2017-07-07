@@ -39,3 +39,4 @@ if ($result->isOk()) {
 * changeEmail
 * sendTrigger
 * sendTransactional
+* getLists

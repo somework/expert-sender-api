@@ -70,7 +70,7 @@ class ApiResult
     protected function buildData()
     {
         try {
-            $content = $this->response->getBody()->getContents();
+            $content = $this->response->getBody()->__toString();
             if (preg_match('~<Code>(.+)</Code>~', $content, $matches)) {
                 $this->errorCode = (int) $matches[1];
             }

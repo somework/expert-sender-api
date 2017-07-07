@@ -31,6 +31,7 @@ class ExpertSenderEnum
     const URL_DELETE_TABLE_ROW = 'DataTablesDeleteRow';
     const URL_UPDATE_TABLE_ROW = 'DataTablesUpdateRow';
     const URL_GET_TABLE_DATA = 'DataTablesGetData';
+    const URL_GET_LISTS = 'Lists';
 
     /**
      * @return array

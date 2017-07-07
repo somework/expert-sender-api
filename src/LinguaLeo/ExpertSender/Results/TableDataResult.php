@@ -12,7 +12,7 @@ class TableDataResult extends ApiResult
     /**
      * @param ResponseInterface $response
      */
-    public function __construct($response)
+    public function __construct(ResponseInterface $response)
     {
         parent::__construct($response);
         $this->parse();
@@ -29,7 +29,7 @@ class TableDataResult extends ApiResult
     protected function parse()
     {
         if ($this->isOk()) {
-            $response = $this->removeBOM($this->response->getBody()->getContents());
+            $response = $this->removeBOM($this->response->getBody()->__toString());
             $temp = tmpfile();
             fwrite($temp, $response);
             fseek($temp, 0);

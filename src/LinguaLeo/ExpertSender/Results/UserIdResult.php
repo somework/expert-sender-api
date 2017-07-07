@@ -3,12 +3,13 @@
 namespace LinguaLeo\ExpertSender\Results;
 
 use LinguaLeo\ExpertSender\ExpertSenderException;
+use Psr\Http\Message\ResponseInterface;
 
 class UserIdResult extends ApiResult
 {
     protected $id;
 
-    public function __construct($response)
+    public function __construct(ResponseInterface $response)
     {
         parent::__construct($response);
 
@@ -20,7 +21,7 @@ class UserIdResult extends ApiResult
         if (!$this->isOk()) {
             throw new ExpertSenderException("Can't get user id");
         }
-        $body = $this->response->getBody()->getContents();
+        $body = $this->response->getBody()->__toString();
         $xml = new \SimpleXMLElement($body);
 
         $idXml = $xml->xpath('/ApiResponse/Data/Id');

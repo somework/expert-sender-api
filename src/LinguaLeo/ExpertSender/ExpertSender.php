@@ -25,6 +25,7 @@ use LinguaLeo\ExpertSender\Chunks\WhereConditionsChunk;
 use LinguaLeo\ExpertSender\Entities\Column;
 use LinguaLeo\ExpertSender\Request\AddUserToList;
 use LinguaLeo\ExpertSender\Results\ApiResult;
+use LinguaLeo\ExpertSender\Results\ListResult;
 use LinguaLeo\ExpertSender\Results\TableDataResult;
 use LinguaLeo\ExpertSender\Results\UserIdResult;
 use Psr\Log\LoggerAwareInterface;
@@ -52,10 +53,10 @@ class ExpertSender implements LoggerAwareInterface
      * @param \GuzzleHttp\ClientInterface|null $client
      * @param \Psr\Log\LoggerInterface         $logger
      */
-    public function __construct($endpointUrl, $apiKey, ClientInterface $client = null, LoggerInterface $logger = null)
+    public function __construct($endpointUrl, $apiKey, ClientInterface $client, LoggerInterface $logger = null)
     {
-        $endpointUrl = rtrim($endpointUrl, '/').'/';
-        $this->endpointUrl = $endpointUrl.'Api/';
+        $endpointUrl = rtrim($endpointUrl, '/') . '/';
+        $this->endpointUrl = $endpointUrl . 'Api/';
 
         $this->apiKey = $apiKey;
         $this->logger = $logger;
@@ -96,6 +97,30 @@ class ExpertSender implements LoggerAwareInterface
         );
 
         $apiResult = new ApiResult($response);
+        $this->logApiResult(__METHOD__, $apiResult);
+
+        return $apiResult;
+    }
+
+    public function getLists($seedLists = false)
+    {
+        $data = $this->getBaseData();
+        if ($seedLists) {
+            $data['seedLists'] = 'true';
+        }
+
+        $response = $this->client->request(
+            'GET',
+            $this->getUrl(ExpertSenderEnum::URL_GET_LISTS),
+            [
+                RequestOptions::HEADERS => [
+                    'Content-Type' => 'text/xml',
+                ],
+                RequestOptions::QUERY   => $data,
+            ]
+        );
+
+        $apiResult = new ListResult($response);
         $this->logApiResult(__METHOD__, $apiResult);
 
         return $apiResult;
@@ -242,7 +267,7 @@ class ExpertSender implements LoggerAwareInterface
             $groupChunk->addChunk(new OrderByColumnsChunk($orderByChunks));
         }
         if ($limit) {
-            $limitChunk = new SimpleChunk('Limit', (int) $limit);
+            $limitChunk = new SimpleChunk('Limit', (int)$limit);
             $groupChunk->addChunk($limitChunk);
         }
         $headerChunk = $this->getHeaderChunk($groupChunk);
@@ -449,7 +474,7 @@ class ExpertSender implements LoggerAwareInterface
 
     protected function getUrl(...$parameters)
     {
-        return $this->endpointUrl.sprintf(...$parameters);
+        return $this->endpointUrl . sprintf(...$parameters);
     }
 
     /**
@@ -543,6 +568,6 @@ class ExpertSender implements LoggerAwareInterface
         }
 
         $level = $result->isOk() ? LogLevel::INFO : LogLevel::ERROR;
-        $this->logger->log($level, sprintf('ES method "%s"', $method), (array) $result);
+        $this->logger->log($level, sprintf('ES method "%s"', $method), (array)$result);
     }
 }
