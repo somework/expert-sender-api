@@ -3,8 +3,9 @@
 namespace LinguaLeo\ExpertSender\Chunks;
 
 use LinguaLeo\ExpertSender\Entities\Receiver;
+use PHPUnit\Framework\TestCase;
 
-class ReceiversChunkTest extends \PHPUnit_Framework_TestCase
+class ReceiversChunkTest extends TestCase
 {
     public function testGetText()
     {

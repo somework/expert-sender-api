@@ -2,13 +2,16 @@
 
 namespace LinguaLeo\ExpertSender;
 
+use GuzzleHttp\Client;
 use LinguaLeo\ExpertSender\Entities\Column;
 use LinguaLeo\ExpertSender\Entities\Property;
 use LinguaLeo\ExpertSender\Entities\Receiver;
 use LinguaLeo\ExpertSender\Entities\Snippet;
 use LinguaLeo\ExpertSender\Entities\Where;
+use LinguaLeo\ExpertSender\Request\AddUserToList;
+use PHPUnit\Framework\TestCase;
 
-class ExpertSenderTest extends \PHPUnit_Framework_TestCase
+class ExpertSenderTest extends TestCase
 {
     /** @var ExpertSender */
     protected $expertSender;
@@ -17,7 +20,7 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
     protected $addUserToListRequest;
 
     /** @var array|null */
-    protected $params = null;
+    protected $params;
 
     public function setUp()
     {
@@ -26,7 +29,7 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
         $this->expertSender = new ExpertSender(
             $this->getParam('url'),
             $this->getParam('key'),
-            new HttpTransport()
+            new Client()
         );
 
         // minimal required request setup
@@ -37,7 +40,7 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
 
     public function getParams()
     {
-        $paramsPath = __DIR__.'/params.json';
+        $paramsPath = __DIR__ . '/params.json';
 
         if (!is_file($paramsPath)) {
             $this->markTestSkipped('params.json is required to run this test');
@@ -55,8 +58,8 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
             }
         }
 
-        if (!isset($this->params[$param]) || null === $this->params[$param]) {
-            $this->markTestSkipped($param.' must be configured in params.json to run this test');
+        if (!isset($this->params[$param])) {
+            $this->markTestSkipped($param . ' must be configured in params.json to run this test');
         }
 
         return $this->params[$param];
@@ -87,35 +90,11 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
         return $this->getParam('testTableName');
     }
 
-    public function testListsOldApi()
-    {
-        $randomEmail = sprintf('some_random_%s@gmail.com', rand(0, 100000000000).rand(0, 1000000000000));
-
-        $addResult = $this->expertSender->addUserToList(
-            $randomEmail,
-            $this->getTestListId(),
-            [new Property(1775, ExpertSenderEnum::TYPE_STRING, 'female')],
-            'Alex'
-        );
-
-        $this->assertTrue($addResult->isOk());
-        $this->assertEquals(0, $addResult->getErrorCode());
-        $this->assertEquals('', $addResult->getErrorMessage());
-
-        $deleteResult = $this->expertSender->deleteUser($randomEmail);
-        $this->assertTrue($deleteResult->isOk());
-
-        $invalidDeleteResult = $this->expertSender->deleteUser($randomEmail);
-        $this->assertFalse($invalidDeleteResult->isOk());
-        $this->assertEquals(404, $invalidDeleteResult->getErrorCode());
-        $this->assertRegExp('~not found~', $invalidDeleteResult->getErrorMessage());
-    }
-
     public function testLists()
     {
-        $randomEmail = sprintf('some_random_%s@gmail.com', rand(0, 100000000000).rand(0, 1000000000000));
+        $randomEmail = sprintf('some_random_%s@gmail.com', mt_rand(0, 100000000000) . mt_rand(0, 1000000000000));
 
-        $trackingCode = 'phpunit'.time();
+        $trackingCode = 'phpunit' . time();
 
         $request = (new Request\AddUserToList())
             ->setEmail($randomEmail)
@@ -158,7 +137,7 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group table
+     * @group   table
      * @depends testAddTableRow
      */
     public function testGetTableData()
@@ -170,12 +149,12 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertTrue($result->isOk());
         $tableData = $result->getData();
-        $this->assertEquals(2, count($tableData));
+        $this->assertCount(2, $tableData);
         $this->assertEquals(['Alex', 'True'], $tableData[1]);
     }
 
     /**
-     * @group table
+     * @group   table
      * @depends testAddTableRow
      */
     public function testUpdateTableRow()
@@ -191,7 +170,7 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group table
+     * @group   table
      * @depends testUpdateTableRow
      */
     public function testDeleteTableRow()
@@ -205,17 +184,17 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
 
     public function testChangeEmail()
     {
-        $randomEmail = sprintf('some_random_%s@gmail.com', rand(0, 100000000000).rand(0, 1000000000000));
-        $randomEmail2 = sprintf('some_random_%s@gmail.com', rand(0, 100000000000).rand(0, 1000000000000));
+        $randomEmail = sprintf('some_random_%s@gmail.com', mt_rand(0, 100000000000) . mt_rand(0, 1000000000000));
+        $randomEmail2 = sprintf('some_random_%s@gmail.com', mt_rand(0, 100000000000) . mt_rand(0, 1000000000000));
 
         $listId = $this->getTestListId();
 
-        $this->expertSender->addUserToList(
-            $randomEmail,
-            $listId,
-            [new Property(1775, ExpertSenderEnum::TYPE_STRING, 'female')],
-            'Alex'
-        );
+        $addUserToList = (new AddUserToList())
+            ->setEmail($randomEmail)
+            ->setListId($listId)
+            ->setProperties([new Property(1775, ExpertSenderEnum::TYPE_STRING, 'female')])
+            ->setName('Alex');
+        $this->expertSender->addUserToList($addUserToList);
 
         $result = $this->expertSender->getUserId($randomEmail);
         $oldId = $result->getId();
@@ -236,15 +215,15 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
 
     public function testSendTrigger()
     {
-        $randomEmail = sprintf($this->getTestEmailPattern(), rand(0, 100000000000).rand(0, 1000000000000));
+        $randomEmail = sprintf($this->getTestEmailPattern(), mt_rand(0, 100000000000) . mt_rand(0, 1000000000000));
         $listId = $this->getTestListId();
 
-        $this->expertSender->addUserToList(
-            $randomEmail,
-            $listId,
-            [new Property(1775, ExpertSenderEnum::TYPE_STRING, 'male')],
-            'Vladimir'
-        );
+        $addUserToList = (new AddUserToList())
+            ->setEmail($randomEmail)
+            ->setListId($listId)
+            ->setProperties([new Property(1775, ExpertSenderEnum::TYPE_STRING, 'male')])
+            ->setName('Vladimir');
+        $this->expertSender->addUserToList($addUserToList);
 
         $this->expertSender->sendTrigger($this->getTestTrigger(), [new Receiver($randomEmail)]);
 
@@ -253,15 +232,15 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
 
     public function testSendTransactional()
     {
-        $randomEmail = sprintf($this->getTestEmailPattern(), rand(0, 100000000000).rand(0, 1000000000000));
+        $randomEmail = sprintf($this->getTestEmailPattern(), mt_rand(0, 100000000000) . mt_rand(0, 1000000000000));
         $listId = $this->getTestListId();
 
-        $this->expertSender->addUserToList(
-            $randomEmail,
-            $listId,
-            [new Property(1775, ExpertSenderEnum::TYPE_STRING, 'male')],
-            'Vladimir'
-        );
+        $addUserToList = (new AddUserToList())
+            ->setEmail($randomEmail)
+            ->setListId($listId)
+            ->setProperties([new Property(1775, ExpertSenderEnum::TYPE_STRING, 'male')])
+            ->setName('Vladimir');
+        $this->expertSender->addUserToList($addUserToList);
 
         $this->expertSender->sendTransactional(
             $this->getTestTransactional(),
@@ -279,13 +258,5 @@ class ExpertSenderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->addUserToListRequest->isFrozen());
 
         $this->assertTrue($result->isOk());
-    }
-
-    /**
-     * @expectedException \BadMethodCallException
-     */
-    public function testAddUserToListAcceptsRequestAndNoOtherArgs()
-    {
-        $this->expertSender->addUserToList($this->addUserToListRequest, 'additional_argument');
     }
 }

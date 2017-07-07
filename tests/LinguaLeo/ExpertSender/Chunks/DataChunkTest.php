@@ -2,13 +2,27 @@
 
 namespace LinguaLeo\ExpertSender\Chunks;
 
-class DataChunkTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class DataChunkTest extends TestCase
 {
     public function testGetText()
     {
-        $bodyChunk1 = $this->getMock('LinguaLeo\ExpertSender\Chunks\SimpleChunk', ['getText'], [], '', false);
+        /**
+         * @var SimpleChunk|\PHPUnit_Framework_MockObject_MockObject $bodyChunk1
+         * @var SimpleChunk|\PHPUnit_Framework_MockObject_MockObject $bodyChunk2
+         */
+        $bodyChunk1 = $this
+            ->getMockBuilder(SimpleChunk::class)
+            ->setMethods(['getText'])
+            ->disableOriginalConstructor()
+            ->getMock();
         $bodyChunk1->expects($this->once())->method('getText')->will($this->returnValue('data1'));
-        $bodyChunk2 = $this->getMock('LinguaLeo\ExpertSender\Chunks\SimpleChunk', ['getText'], [], '', false);
+        $bodyChunk2 = $this
+            ->getMockBuilder(SimpleChunk::class)
+            ->setMethods(['getText'])
+            ->disableOriginalConstructor()
+            ->getMock();
         $bodyChunk2->expects($this->once())->method('getText')->will($this->returnValue('data2'));
 
         $dataChunk = new DataChunk('subscriber');

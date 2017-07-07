@@ -4,8 +4,9 @@ namespace LinguaLeo\ExpertSender\Chunks;
 
 use LinguaLeo\ExpertSender\Entities\OrderBy;
 use LinguaLeo\ExpertSender\ExpertSenderEnum;
+use PHPUnit\Framework\TestCase;
 
-class OrderByColumnsChunkTest extends \PHPUnit_Framework_TestCase
+class OrderByColumnsChunkTest extends TestCase
 {
     public function testGetText()
     {

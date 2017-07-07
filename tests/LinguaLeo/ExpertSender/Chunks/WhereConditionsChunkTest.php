@@ -4,8 +4,9 @@ namespace LinguaLeo\ExpertSender\Chunks;
 
 use LinguaLeo\ExpertSender\Entities\Where;
 use LinguaLeo\ExpertSender\ExpertSenderEnum;
+use PHPUnit\Framework\TestCase;
 
-class WhereConditionsChunkTest extends \PHPUnit_Framework_TestCase
+class WhereConditionsChunkTest extends TestCase
 {
     public function testGetText()
     {

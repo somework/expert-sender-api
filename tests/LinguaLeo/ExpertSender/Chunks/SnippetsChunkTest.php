@@ -3,8 +3,9 @@
 namespace LinguaLeo\ExpertSender\Chunks;
 
 use LinguaLeo\ExpertSender\Entities\Snippet;
+use PHPUnit\Framework\TestCase;
 
-class SnippetsChunkTest extends \PHPUnit_Framework_TestCase
+class SnippetsChunkTest extends TestCase
 {
     public function testGetText()
     {

@@ -2,7 +2,9 @@
 
 namespace LinguaLeo\ExpertSender\Chunks;
 
-class GroupChunkTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class GroupChunkTest extends TestCase
 {
     public function testGetText()
     {

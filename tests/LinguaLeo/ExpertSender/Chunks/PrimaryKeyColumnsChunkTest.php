@@ -3,20 +3,21 @@
 namespace LinguaLeo\ExpertSender\Chunks;
 
 use LinguaLeo\ExpertSender\Entities\Column;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class PrimaryKeyColumnsChunkTest.
  *
  * @group table-primary-columns
  */
-class PrimaryKeyColumnsChunkTest extends \PHPUnit_Framework_TestCase
+class PrimaryKeyColumnsChunkTest extends TestCase
 {
     public function testGetText()
     {
         $columnsChunks = [
             new ColumnChunk(new Column('name', 'Alex<br/>')),
             new ColumnChunk(new Column('sex', 'male')),
-            new ColumnChunk(new Column('age', 22)),
+            new ColumnChunk(new Column('age', '22')),
         ];
 
         $columnsChunk = new PrimaryKeyColumnsChunk($columnsChunks);

@@ -3,15 +3,16 @@
 namespace LinguaLeo\ExpertSender\Chunks;
 
 use LinguaLeo\ExpertSender\Entities\Column;
+use PHPUnit\Framework\TestCase;
 
-class ColumnsChunkTest extends \PHPUnit_Framework_TestCase
+class ColumnsChunkTest extends TestCase
 {
     public function testGetText()
     {
         $columnsChunks = [
             new ColumnChunk(new Column('name', 'Alex<br/>Aksef')),
             new ColumnChunk(new Column('sex', 'male')),
-            new ColumnChunk(new Column('age', 22)),
+            new ColumnChunk(new Column('age', '22')),
         ];
 
         $columnsChunk = new ColumnsChunk($columnsChunks);

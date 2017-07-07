@@ -2,6 +2,8 @@
 
 namespace LinguaLeo\ExpertSender;
 
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\RequestOptions;
 use LinguaLeo\ExpertSender\Chunks\ChunkInterface;
 use LinguaLeo\ExpertSender\Chunks\ColumnChunk;
 use LinguaLeo\ExpertSender\Chunks\ColumnsChunk;
@@ -22,6 +24,7 @@ use LinguaLeo\ExpertSender\Chunks\WhereChunk;
 use LinguaLeo\ExpertSender\Chunks\WhereConditionsChunk;
 use LinguaLeo\ExpertSender\Entities\Column;
 use LinguaLeo\ExpertSender\Request\AddUserToList;
+use LinguaLeo\ExpertSender\Results\ApiResult;
 use LinguaLeo\ExpertSender\Results\TableDataResult;
 use LinguaLeo\ExpertSender\Results\UserIdResult;
 use Psr\Log\LoggerAwareInterface;
@@ -33,53 +36,30 @@ class ExpertSender implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
+    /**
+     * @var string
+     */
     protected $apiKey;
-
-    /** @var HttpTransport */
-    protected $transport;
-
     protected $endpointUrl;
-    protected $subscribersUrl;
-    protected $triggerUrlPattern;
-    protected $addTableRowUrl;
-    protected $deleteTableRowUrl;
-    protected $updateTableRowUrl;
-    protected $getTableDataUrl;
-    protected $transactionalUrlPattern;
+    /**
+     * @var \GuzzleHttp\ClientInterface|null
+     */
+    private $client;
 
     /**
-     * @param string                   $endpointUrl - url without /Api
-     * @param string                   $apiKey
-     * @param HttpTransport            $transport
-     * @param \Psr\Log\LoggerInterface $logger
+     * @param string                           $endpointUrl - url without /Api
+     * @param string                           $apiKey
+     * @param \GuzzleHttp\ClientInterface|null $client
+     * @param \Psr\Log\LoggerInterface         $logger
      */
-    public function __construct($endpointUrl, $apiKey, HttpTransport $transport = null, LoggerInterface $logger = null)
+    public function __construct($endpointUrl, $apiKey, ClientInterface $client = null, LoggerInterface $logger = null)
     {
-        $endpointUrl = rtrim($endpointUrl, '/').'/';
+        $endpointUrl = rtrim($endpointUrl, '/') . '/';
+        $this->endpointUrl = $endpointUrl . 'Api/';
 
-        if ($transport === null) {
-            $transport = new HttpTransport();
-        }
-
-        $this->endpointUrl = $endpointUrl.'Api/';
-        $this->subscribersUrl = $this->endpointUrl.'Subscribers';
-        $this->triggerUrlPattern = $this->endpointUrl.'Triggers/%s';
-        $this->transactionalUrlPattern = $this->endpointUrl.'Transactionals/%s';
-        $this->addTableRowUrl = $this->endpointUrl.'DataTablesAddRow';
-        $this->deleteTableRowUrl = $this->endpointUrl.'DataTablesDeleteRow';
-        $this->updateTableRowUrl = $this->endpointUrl.'DataTablesUpdateRow';
-        $this->getTableDataUrl = $this->endpointUrl.'DataTablesGetData';
         $this->apiKey = $apiKey;
-        $this->transport = $transport;
         $this->logger = $logger;
-    }
-
-    /**
-     * @return array
-     */
-    public function getRequestData()
-    {
-        return stream_context_get_options($this->transport->getContext());
+        $this->client = $client;
     }
 
     /**
@@ -92,7 +72,8 @@ class ExpertSender implements LoggerAwareInterface
      *
      * @throws \BadMethodCallException
      *
-     * @return \LinguaLeo\ExpertSender\ApiResult
+     * @return ApiResult
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function addUserToList(AddUserToList $request)
     {
@@ -103,8 +84,17 @@ class ExpertSender implements LoggerAwareInterface
         $request->freeze();
 
         $headerChunk = $this->getAddUserToListHeaderChunk($request);
-
-        $response = $this->transport->post($this->subscribersUrl, $headerChunk->getText());
+        $response = $this->client->request(
+            'POST',
+            $this->getUrl(ExpertSenderEnum::URL_SUBSCRIBERS),
+            [
+                RequestOptions::TIMEOUT => 30,
+                RequestOptions::HEADERS => [
+                    'Content-Type' => 'text/xml',
+                ],
+                RequestOptions::BODY    => $headerChunk->getText(),
+            ]
+        );
 
         $apiResult = new ApiResult($response);
         $this->logApiResult(__METHOD__, $apiResult);
@@ -117,6 +107,7 @@ class ExpertSender implements LoggerAwareInterface
      * @param int $listId
      *
      * @return ApiResult
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function deleteUser($email, $listId = null)
     {
@@ -126,7 +117,17 @@ class ExpertSender implements LoggerAwareInterface
             $data['listId'] = $listId;
         }
 
-        $response = $this->transport->delete($this->subscribersUrl, $data);
+        $response = $this->client->request(
+            'DELETE',
+            $this->getUrl(ExpertSenderEnum::URL_SUBSCRIBERS),
+            [
+                RequestOptions::TIMEOUT => 30,
+                RequestOptions::HEADERS => [
+                    'Content-Type' => 'text/xml',
+                ],
+                RequestOptions::QUERY   => $data,
+            ]
+        );
 
         $apiResult = new ApiResult($response);
         $this->logApiResult(__METHOD__, $apiResult);
@@ -138,6 +139,7 @@ class ExpertSender implements LoggerAwareInterface
      * @param $email
      *
      * @return UserIdResult
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getUserId($email)
     {
@@ -145,7 +147,17 @@ class ExpertSender implements LoggerAwareInterface
         $data['email'] = $email;
         $data['option'] = '3';
 
-        $response = $this->transport->get($this->subscribersUrl, $data);
+        $response = $this->client->request(
+            'GET',
+            $this->getUrl(ExpertSenderEnum::URL_SUBSCRIBERS),
+            [
+                RequestOptions::TIMEOUT => 30,
+                RequestOptions::HEADERS => [
+                    'Content-Type' => 'text/xml',
+                ],
+                RequestOptions::QUERY   => $data,
+            ]
+        );
 
         $apiResult = new UserIdResult($response);
         $this->logApiResult(__METHOD__, $apiResult);
@@ -157,7 +169,8 @@ class ExpertSender implements LoggerAwareInterface
      * @param string   $tableName
      * @param Column[] $columns
      *
-     * @return \LinguaLeo\ExpertSender\ApiResult
+     * @return ApiResult
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function addTableRow($tableName, array $columns)
     {
@@ -172,7 +185,18 @@ class ExpertSender implements LoggerAwareInterface
         $groupChunk = new GroupChunk([$tableNameChunk, $dataChunk]);
         $headerChunk = $this->getHeaderChunk($groupChunk);
 
-        $response = $this->transport->post($this->addTableRowUrl, $headerChunk->getText());
+        $response = $this->client->request(
+            'POST',
+            $this->getUrl(ExpertSenderEnum::URL_ADD_TABLE_ROW),
+            [
+                RequestOptions::TIMEOUT => 30,
+                RequestOptions::HEADERS => [
+                    'Content-Type' => 'text/xml',
+                ],
+                RequestOptions::BODY    => $headerChunk->getText(),
+            ]
+        );
+
         $apiResult = new ApiResult($response);
         $this->logApiResult(__METHOD__, $apiResult);
 
@@ -187,6 +211,7 @@ class ExpertSender implements LoggerAwareInterface
      * @param mixed $limit
      *
      * @return \LinguaLeo\ExpertSender\Results\TableDataResult
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getTableData(
         $tableName,
@@ -217,12 +242,23 @@ class ExpertSender implements LoggerAwareInterface
             $groupChunk->addChunk(new OrderByColumnsChunk($orderByChunks));
         }
         if ($limit) {
-            $limitChunk = new SimpleChunk('Limit', (int) $limit);
+            $limitChunk = new SimpleChunk('Limit', (int)$limit);
             $groupChunk->addChunk($limitChunk);
         }
         $headerChunk = $this->getHeaderChunk($groupChunk);
 
-        $response = $this->transport->post($this->getTableDataUrl, $headerChunk->getText());
+        $response = $this->client->request(
+            'POST',
+            $this->getUrl(ExpertSenderEnum::URL_GET_TABLE_DATA),
+            [
+                RequestOptions::TIMEOUT => 30,
+                RequestOptions::HEADERS => [
+                    'Content-Type' => 'text/xml',
+                ],
+                RequestOptions::BODY    => $headerChunk->getText(),
+            ]
+        );
+
         $apiResult = new TableDataResult($response);
         $this->logApiResult(__METHOD__, $apiResult);
 
@@ -235,6 +271,7 @@ class ExpertSender implements LoggerAwareInterface
      * @param array  $columns
      *
      * @return ApiResult
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function updateTableRow($tableName, array $primaryKeyColumns, array $columns)
     {
@@ -251,7 +288,18 @@ class ExpertSender implements LoggerAwareInterface
         $groupChunk = new GroupChunk([$tableNameChunk, $primaryKeyColumnsChunk, $columnsChunk]);
         $headerChunk = $this->getHeaderChunk($groupChunk);
 
-        $response = $this->transport->post($this->updateTableRowUrl, $headerChunk->getText());
+        $response = $this->client->request(
+            'POST',
+            $this->getUrl(ExpertSenderEnum::URL_UPDATE_TABLE_ROW),
+            [
+                RequestOptions::TIMEOUT => 30,
+                RequestOptions::HEADERS => [
+                    'Content-Type' => 'text/xml',
+                ],
+                RequestOptions::BODY    => $headerChunk->getText(),
+            ]
+        );
+
         $apiResult = new ApiResult($response);
         $this->logApiResult(__METHOD__, $apiResult);
 
@@ -262,7 +310,8 @@ class ExpertSender implements LoggerAwareInterface
      * @param string   $tableName
      * @param Column[] $primaryKeyColumns
      *
-     * @return \LinguaLeo\ExpertSender\ApiResult
+     * @return ApiResult
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function deleteTableRow($tableName, array $primaryKeyColumns)
     {
@@ -275,7 +324,18 @@ class ExpertSender implements LoggerAwareInterface
         $groupChunk = new GroupChunk([$tableNameChunk, $primaryKeyColumnsChunk]);
         $headerChunk = $this->getHeaderChunk($groupChunk);
 
-        $response = $this->transport->post($this->deleteTableRowUrl, $headerChunk->getText());
+        $response = $this->client->request(
+            'POST',
+            $this->getUrl(ExpertSenderEnum::URL_DELETE_TABLE_ROW),
+            [
+                RequestOptions::TIMEOUT => 30,
+                RequestOptions::HEADERS => [
+                    'Content-Type' => 'text/xml',
+                ],
+                RequestOptions::BODY    => $headerChunk->getText(),
+            ]
+        );
+
         $apiResult = new ApiResult($response);
         $this->logApiResult(__METHOD__, $apiResult);
 
@@ -291,6 +351,7 @@ class ExpertSender implements LoggerAwareInterface
      * @throws \BadMethodCallException
      *
      * @return ApiResult
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function changeEmail($listId, $from, $to)
     {
@@ -314,7 +375,8 @@ class ExpertSender implements LoggerAwareInterface
      * @param int   $triggerId
      * @param array $receivers
      *
-     * @return \LinguaLeo\ExpertSender\ApiResult
+     * @return ApiResult
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function sendTrigger($triggerId, array $receivers)
     {
@@ -328,8 +390,17 @@ class ExpertSender implements LoggerAwareInterface
         $dataChunk->addChunk($receiversChunks);
         $headerChunk = $this->getHeaderChunk($dataChunk);
 
-        $url = sprintf($this->triggerUrlPattern, $triggerId);
-        $response = $this->transport->post($url, $headerChunk->getText());
+        $response = $this->client->request(
+            'POST',
+            $this->getUrl(ExpertSenderEnum::URL_TRIGGER_PATTERN, $triggerId),
+            [
+                RequestOptions::TIMEOUT => 30,
+                RequestOptions::HEADERS => [
+                    'Content-Type' => 'text/xml',
+                ],
+                RequestOptions::BODY    => $headerChunk->getText(),
+            ]
+        );
 
         $apiResult = new ApiResult($response);
         $this->logApiResult(__METHOD__, $apiResult);
@@ -342,7 +413,8 @@ class ExpertSender implements LoggerAwareInterface
      * @param       $receiver
      * @param array $snippets
      *
-     * @return \LinguaLeo\ExpertSender\ApiResult
+     * @return ApiResult
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function sendTransactional($transactionId, $receiver, array $snippets = [])
     {
@@ -358,13 +430,27 @@ class ExpertSender implements LoggerAwareInterface
         $dataChunk->addChunk($snippetsChunks);
         $headerChunk = $this->getHeaderChunk($dataChunk);
 
-        $url = sprintf($this->transactionalUrlPattern, $transactionId);
-        $response = $this->transport->post($url, $headerChunk->getText());
+        $response = $this->client->request(
+            'POST',
+            $this->getUrl(ExpertSenderEnum::URL_TRANSACTIONAL_PATTERN, $transactionId),
+            [
+                RequestOptions::TIMEOUT => 30,
+                RequestOptions::HEADERS => [
+                    'Content-Type' => 'text/xml',
+                ],
+                RequestOptions::BODY    => $headerChunk->getText(),
+            ]
+        );
 
         $apiResult = new ApiResult($response);
         $this->logApiResult(__METHOD__, $apiResult);
 
         return $apiResult;
+    }
+
+    protected function getUrl(... $parameters)
+    {
+        return $this->endpointUrl . sprintf(... $parameters);
     }
 
     /**
@@ -458,6 +544,6 @@ class ExpertSender implements LoggerAwareInterface
         }
 
         $level = $result->isOk() ? LogLevel::INFO : LogLevel::ERROR;
-        $this->logger->log($level, sprintf('ES method "%s"', $method), (array) $result);
+        $this->logger->log($level, sprintf('ES method "%s"', $method), (array)$result);
     }
 }

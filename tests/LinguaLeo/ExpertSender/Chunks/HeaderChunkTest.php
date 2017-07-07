@@ -2,11 +2,20 @@
 
 namespace LinguaLeo\ExpertSender\Chunks;
 
-class HeaderChunkTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class HeaderChunkTest extends TestCase
 {
     public function testGetText()
     {
-        $bodyChunk = $this->getMock('LinguaLeo\ExpertSender\Chunks\SimpleChunk', ['getText'], [], '', false);
+        /**
+         * @var SimpleChunk|\PHPUnit_Framework_MockObject_MockObject $bodyChunk
+         */
+        $bodyChunk = $this
+            ->getMockBuilder(SimpleChunk::class)
+            ->setMethods(['getText'])
+            ->disableOriginalConstructor()
+            ->getMock();
         $bodyChunk->expects($this->once())->method('getText')->will($this->returnValue('body'));
 
         $headerChunk = new HeaderChunk('api-key', $bodyChunk);

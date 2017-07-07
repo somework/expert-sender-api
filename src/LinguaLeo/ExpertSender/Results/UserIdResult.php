@@ -2,7 +2,6 @@
 
 namespace LinguaLeo\ExpertSender\Results;
 
-use LinguaLeo\ExpertSender\ApiResult;
 use LinguaLeo\ExpertSender\ExpertSenderException;
 
 class UserIdResult extends ApiResult
@@ -18,7 +17,10 @@ class UserIdResult extends ApiResult
 
     public function parseBody()
     {
-        $body = $this->response->getBody();
+        if (!$this->isOk()) {
+            throw new ExpertSenderException("Can't get user id");
+        }
+        $body = $this->response->getBody()->getContents();
         $xml = new \SimpleXMLElement($body);
 
         $idXml = $xml->xpath('/ApiResponse/Data/Id');
@@ -26,7 +28,7 @@ class UserIdResult extends ApiResult
             throw new ExpertSenderException("Can't get user id");
         }
 
-        $this->id = (string) $idXml[0];
+        $this->id = (string)$idXml[0];
     }
 
     /**

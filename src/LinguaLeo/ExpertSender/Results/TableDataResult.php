@@ -2,7 +2,7 @@
 
 namespace LinguaLeo\ExpertSender\Results;
 
-use LinguaLeo\ExpertSender\ApiResult;
+use Psr\Http\Message\ResponseInterface;
 
 class TableDataResult extends ApiResult
 {
@@ -10,7 +10,7 @@ class TableDataResult extends ApiResult
     protected $data = [];
 
     /**
-     * @param \LinguaLeo\ExpertSender\ExpertSenderResponse $response
+     * @param ResponseInterface $response
      */
     public function __construct($response)
     {
@@ -28,17 +28,16 @@ class TableDataResult extends ApiResult
 
     protected function parse()
     {
-        $response = $this->removeBOM($this->response->getBody());
-        if (!$response || !$this->response->isOk()) {
-            return;
+        if($this->isOk()) {
+            $response = $this->removeBOM($this->response->getBody()->getContents());
+            $temp = tmpfile();
+            fwrite($temp, $response);
+            fseek($temp, 0);
+            while (($row = fgetcsv($temp)) !== false) {
+                $this->data[] = $row;
+            }
+            fclose($temp);
         }
-        $temp = tmpfile();
-        fwrite($temp, $response);
-        fseek($temp, 0);
-        while (($row = fgetcsv($temp)) !== false) {
-            $this->data[] = $row;
-        }
-        fclose($temp);
     }
 
     /**

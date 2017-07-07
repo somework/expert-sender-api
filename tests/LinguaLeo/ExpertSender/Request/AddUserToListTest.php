@@ -4,8 +4,9 @@ namespace LinguaLeo\ExpertSender\Request;
 
 use LinguaLeo\ExpertSender\Entities\Property;
 use LinguaLeo\ExpertSender\ExpertSenderEnum;
+use PHPUnit\Framework\TestCase;
 
-class AddUserToListTest extends \PHPUnit_Framework_TestCase
+class AddUserToListTest extends TestCase
 {
     /**
      * @var AddUserToList
@@ -33,11 +34,14 @@ class AddUserToListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provideMethodsValues
+     *
+     * @param $field
+     * @param $value
      */
     public function testValuesAreSet($field, $value)
     {
-        $setter = 'set'.ucfirst($field);
-        $getter = 'get'.ucfirst($field);
+        $setter = 'set' . ucfirst($field);
+        $getter = 'get' . ucfirst($field);
 
         $this->request->$setter($value);
 
@@ -64,9 +68,12 @@ class AddUserToListTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @depends testIsValidWithMinimalSetup
+     * @depends      testIsValidWithMinimalSetup
      * @dataProvider provideMethodsValues
      * @expectedException \BadMethodCallException
+     *
+     * @param $field
+     * @param $value
      */
     public function testCannotBeChangedWhenFrozen($field, $value)
     {
@@ -76,7 +83,7 @@ class AddUserToListTest extends \PHPUnit_Framework_TestCase
 
         $this->request->freeze();
 
-        $setter = 'set'.ucfirst($field);
+        $setter = 'set' . ucfirst($field);
 
         $this->request->$setter($value);
     }
