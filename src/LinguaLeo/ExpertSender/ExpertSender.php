@@ -55,20 +55,20 @@ class ExpertSender implements LoggerAwareInterface
      */
     public function __construct($endpointUrl, $apiKey, HttpTransport $transport = null, LoggerInterface $logger = null)
     {
-        $endpointUrl = rtrim($endpointUrl, '/') . '/';
+        $endpointUrl = rtrim($endpointUrl, '/').'/';
 
         if ($transport === null) {
             $transport = new HttpTransport();
         }
 
-        $this->endpointUrl = $endpointUrl . 'Api/';
-        $this->subscribersUrl = $this->endpointUrl . 'Subscribers';
-        $this->triggerUrlPattern = $this->endpointUrl . 'Triggers/%s';
-        $this->transactionalUrlPattern = $this->endpointUrl . 'Transactionals/%s';
-        $this->addTableRowUrl = $this->endpointUrl . 'DataTablesAddRow';
-        $this->deleteTableRowUrl = $this->endpointUrl . 'DataTablesDeleteRow';
-        $this->updateTableRowUrl = $this->endpointUrl . 'DataTablesUpdateRow';
-        $this->getTableDataUrl = $this->endpointUrl . 'DataTablesGetData';
+        $this->endpointUrl = $endpointUrl.'Api/';
+        $this->subscribersUrl = $this->endpointUrl.'Subscribers';
+        $this->triggerUrlPattern = $this->endpointUrl.'Triggers/%s';
+        $this->transactionalUrlPattern = $this->endpointUrl.'Transactionals/%s';
+        $this->addTableRowUrl = $this->endpointUrl.'DataTablesAddRow';
+        $this->deleteTableRowUrl = $this->endpointUrl.'DataTablesDeleteRow';
+        $this->updateTableRowUrl = $this->endpointUrl.'DataTablesUpdateRow';
+        $this->getTableDataUrl = $this->endpointUrl.'DataTablesGetData';
         $this->apiKey = $apiKey;
         $this->transport = $transport;
         $this->logger = $logger;
@@ -90,8 +90,9 @@ class ExpertSender implements LoggerAwareInterface
      *
      * @param \LinguaLeo\ExpertSender\Request\AddUserToList $request
      *
-     * @return \LinguaLeo\ExpertSender\ApiResult
      * @throws \BadMethodCallException
+     *
+     * @return \LinguaLeo\ExpertSender\ApiResult
      */
     public function addUserToList(AddUserToList $request)
     {
@@ -216,7 +217,7 @@ class ExpertSender implements LoggerAwareInterface
             $groupChunk->addChunk(new OrderByColumnsChunk($orderByChunks));
         }
         if ($limit) {
-            $limitChunk = new SimpleChunk('Limit', (int)$limit);
+            $limitChunk = new SimpleChunk('Limit', (int) $limit);
             $groupChunk->addChunk($limitChunk);
         }
         $headerChunk = $this->getHeaderChunk($groupChunk);
@@ -286,9 +287,10 @@ class ExpertSender implements LoggerAwareInterface
      * @param $from
      * @param $to
      *
-     * @return ApiResult
      * @throws \InvalidArgumentException
      * @throws \BadMethodCallException
+     *
+     * @return ApiResult
      */
     public function changeEmail($listId, $from, $to)
     {
@@ -456,6 +458,6 @@ class ExpertSender implements LoggerAwareInterface
         }
 
         $level = $result->isOk() ? LogLevel::INFO : LogLevel::ERROR;
-        $this->logger->log($level, sprintf('ES method "%s"', $method), (array)$result);
+        $this->logger->log($level, sprintf('ES method "%s"', $method), (array) $result);
     }
 }
