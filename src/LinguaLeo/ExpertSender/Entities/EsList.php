@@ -53,7 +53,8 @@ class EsList
      */
     public function setId($id)
     {
-        $this->id = (int)$id;
+        $this->id = (int) $id;
+
         return $this;
     }
 
@@ -72,7 +73,8 @@ class EsList
      */
     public function setName($name)
     {
-        $this->name = (string)$name;
+        $this->name = (string) $name;
+
         return $this;
     }
 
@@ -91,7 +93,8 @@ class EsList
      */
     public function setFriendlyName($friendlyName)
     {
-        $this->friendlyName = (string)$friendlyName;
+        $this->friendlyName = (string) $friendlyName;
+
         return $this;
     }
 
@@ -110,7 +113,8 @@ class EsList
      */
     public function setLanguage($language)
     {
-        $this->language = (string)$language;
+        $this->language = (string) $language;
+
         return $this;
     }
 
@@ -129,7 +133,8 @@ class EsList
      */
     public function setOptInMod($optInMod)
     {
-        $this->optInMod = (string)$optInMod;
+        $this->optInMod = (string) $optInMod;
+
         return $this;
     }
 }
