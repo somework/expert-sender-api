@@ -2,7 +2,6 @@
 
 namespace LinguaLeo\ExpertSender\Results;
 
-
 use LinguaLeo\ExpertSender\Entities\EsList;
 use LinguaLeo\ExpertSender\ExpertSenderException;
 use Psr\Http\Message\ResponseInterface;
@@ -40,11 +39,11 @@ class ListResult extends ApiResult
         $xmlLists = $xml->xpath('/ApiResponse/Data/Lists/List');
         foreach ($xmlLists as $xmlList) {
             $this->lists[] = new EsList(
-                (int)$xmlList->xpath('Id')[0],
-                (string)$xmlList->xpath('Name')[0],
-                (string)$xmlList->xpath('FriendlyName')[0],
-                (string)$xmlList->xpath('Language')[0],
-                (string)$xmlList->xpath('OptInMode')[0]
+                (int) $xmlList->xpath('Id')[0],
+                (string) $xmlList->xpath('Name')[0],
+                (string) $xmlList->xpath('FriendlyName')[0],
+                (string) $xmlList->xpath('Language')[0],
+                (string) $xmlList->xpath('OptInMode')[0]
             );
         }
     }
