@@ -41,7 +41,7 @@ class ListResult extends ApiResult
             $this->lists[] = new EsList(
                 (int) $xmlList->xpath('Id')[0],
                 (string) $xmlList->xpath('Name')[0],
-                (string) $xmlList->xpath('FriendlyName')[0],
+                $xmlList->xpath('FriendlyName') ? (string) $xmlList->xpath('FriendlyName')[0] : '',
                 (string) $xmlList->xpath('Language')[0],
                 (string) $xmlList->xpath('OptInMode')[0]
             );
