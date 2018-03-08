@@ -2,7 +2,7 @@
 
 namespace LinguaLeo\ExpertSender;
 
-class ExpertSenderEnum
+final class ExpertSenderEnum
 {
     const TYPE_BOOLEAN = 'boolean';
     const TYPE_STRING = 'string';
@@ -32,6 +32,14 @@ class ExpertSenderEnum
     const URL_UPDATE_TABLE_ROW = 'DataTablesUpdateRow';
     const URL_GET_TABLE_DATA = 'DataTablesGetData';
     const URL_GET_LISTS = 'Lists';
+
+    const MODE_SUBSCRIBERS_SHORT = 'Short';
+    const MODE_SUBSCRIBERS_LONG = 'Long';
+    const MODE_SUBSCRIBERS_FULL = 'Full';
+    const MODE_SUBSCRIBERS_EVENTS_HISTORY = 'EventsHistory';
+
+    const DATE_TIME_FORMAT = 'Y-m-d\TH:i:s';
+    const DATE_TIME_TIMEZONE = 'Europe/Moscow';
 
     /**
      * @return array
@@ -68,6 +76,16 @@ class ExpertSenderEnum
             self::MODE_ADD_AND_IGNORE,
             self::MODE_IGNORE_AND_UPDATE,
             self::MODE_IGNORE_AND_REPLACE,
+        ];
+    }
+
+    public static function getSubscribersGetModes()
+    {
+        return [
+            self::MODE_SUBSCRIBERS_SHORT,
+            self::MODE_SUBSCRIBERS_LONG,
+            self::MODE_SUBSCRIBERS_FULL,
+            self::MODE_SUBSCRIBERS_EVENTS_HISTORY,
         ];
     }
 }

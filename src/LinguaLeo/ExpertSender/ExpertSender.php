@@ -25,6 +25,7 @@ use LinguaLeo\ExpertSender\Chunks\WhereConditionsChunk;
 use LinguaLeo\ExpertSender\Entities\Column;
 use LinguaLeo\ExpertSender\Request\AddUserToList;
 use LinguaLeo\ExpertSender\Results\ApiResult;
+use LinguaLeo\ExpertSender\Results\GetShortSubscribersResult;
 use LinguaLeo\ExpertSender\Results\ListResult;
 use LinguaLeo\ExpertSender\Results\TableDataResult;
 use LinguaLeo\ExpertSender\Results\UserIdResult;
@@ -184,6 +185,36 @@ class ExpertSender implements LoggerAwareInterface
         );
 
         $apiResult = new UserIdResult($response);
+        $this->logApiResult(__METHOD__, $apiResult);
+
+        return $apiResult;
+    }
+
+    /**
+     * @param $email
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return GetShortSubscribersResult
+     */
+    public function getShortSubscriber($email)
+    {
+        $data = $this->getBaseData();
+        $data['email'] = $email;
+        $data['option'] = ExpertSenderEnum::MODE_SUBSCRIBERS_SHORT;
+
+        $response = $this->client->request(
+            'GET',
+            $this->getUrl(ExpertSenderEnum::URL_SUBSCRIBERS),
+            [
+                RequestOptions::HEADERS => [
+                    'Content-Type' => 'text/xml',
+                ],
+                RequestOptions::QUERY   => $data,
+            ]
+        );
+
+        $apiResult = new GetShortSubscribersResult($response);
         $this->logApiResult(__METHOD__, $apiResult);
 
         return $apiResult;
