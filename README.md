@@ -40,3 +40,4 @@ if ($result->isOk()) {
 * sendTrigger
 * sendTransactional
 * getLists
+* getShortSubscriber
