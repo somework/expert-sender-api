@@ -54,6 +54,7 @@ class StateOnList
     public function setListId($listId)
     {
         $this->listId = $listId;
+
         return $this;
     }
 
@@ -73,6 +74,7 @@ class StateOnList
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -92,6 +94,7 @@ class StateOnList
     public function setStatus($status)
     {
         $this->status = $status;
+
         return $this;
     }
 
@@ -111,6 +114,7 @@ class StateOnList
     public function setSubscribedOn($subscribedOn)
     {
         $this->subscribedOn = $subscribedOn;
+
         return $this;
     }
 }
