@@ -80,6 +80,11 @@ class ExpertSenderTest extends TestCase
         return $this->getParam('testTransactional');
     }
 
+    public function getTestSystemTransactional()
+    {
+        return $this->getParam('testSystemTransactional');
+    }
+
     public function getTestEmailPattern()
     {
         return $this->getParam('testGmailEmailPattern');
@@ -244,6 +249,19 @@ class ExpertSenderTest extends TestCase
 
         $this->expertSender->sendTransactional(
             $this->getTestTransactional(),
+            new Receiver($randomEmail),
+            [new Snippet('code', 123456)]
+        );
+
+        $this->assertTrue(true);
+    }
+
+    public function testSendSystemTransactional()
+    {
+        $randomEmail = sprintf($this->getTestEmailPattern(), mt_rand(0, 100000000000).mt_rand(0, 1000000000000));
+
+        $this->expertSender->sendSystemTransactional(
+            $this->getTestSystemTransactional(),
             new Receiver($randomEmail),
             [new Snippet('code', 123456)]
         );

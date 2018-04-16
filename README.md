@@ -39,5 +39,6 @@ if ($result->isOk()) {
 * changeEmail
 * sendTrigger
 * sendTransactional
+* sendSystemTransactional
 * getLists
 * getShortSubscriber
