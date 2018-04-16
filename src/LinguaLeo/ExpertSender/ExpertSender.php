@@ -463,17 +463,7 @@ class ExpertSender implements LoggerAwareInterface
         return $apiResult;
     }
 
-    /**
-     * @param       $transactionId
-     * @param       $receiver
-     * @param array $snippets
-     *
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     *
-     * @return ApiResult
-     */
-    public function sendTransactional($transactionId, $receiver, array $snippets = [])
-    {
+    protected function sendTransactionalWithUrlPattern($transactionId, $receiver, array $snippets, $pattern) {
         $snippetChunks = [];
         foreach ($snippets as $snippet) {
             $snippetChunks[] = new SnippetChunk($snippet);
@@ -488,7 +478,7 @@ class ExpertSender implements LoggerAwareInterface
 
         $response = $this->client->request(
             'POST',
-            $this->getUrl(ExpertSenderEnum::URL_TRANSACTIONAL_PATTERN, $transactionId),
+            $this->getUrl($pattern, $transactionId),
             [
                 RequestOptions::HEADERS => [
                     'Content-Type' => 'text/xml',
@@ -501,6 +491,34 @@ class ExpertSender implements LoggerAwareInterface
         $this->logApiResult(__METHOD__, $apiResult);
 
         return $apiResult;
+    }
+
+    /**
+     * @param       $transactionId
+     * @param       $receiver
+     * @param array $snippets
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return ApiResult
+     */
+    public function sendTransactional($transactionId, $receiver, array $snippets = [])
+    {
+        return $this->sendTransactionalWithUrlPattern($transactionId, $receiver, $snippets, ExpertSenderEnum::URL_TRANSACTIONAL_PATTERN);
+    }
+
+    /**
+     * @param       $transactionId
+     * @param       $receiver
+     * @param array $snippets
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     *
+     * @return ApiResult
+     */
+    public function sendSystemTransactional($transactionId, $receiver, array $snippets = [])
+    {
+        return $this->sendTransactionalWithUrlPattern($transactionId, $receiver, $snippets, ExpertSenderEnum::URL_SYSTEM_TRANSACTIONAL_PATTERN);
     }
 
     protected function getUrl(...$parameters)

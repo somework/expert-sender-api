@@ -4,6 +4,7 @@
     "testList": null,
     "testTrigger": null,
     "testTransactional": null,
+    "testSystemTransactional": null,
     "testGmailEmailPattern": null,
     "testTableName": null
 }
