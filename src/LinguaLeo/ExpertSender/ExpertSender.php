@@ -463,7 +463,8 @@ class ExpertSender implements LoggerAwareInterface
         return $apiResult;
     }
 
-    protected function sendTransactionalWithUrlPattern($transactionId, $receiver, array $snippets, $pattern) {
+    protected function sendTransactionalWithUrlPattern($transactionId, $receiver, array $snippets, $pattern)
+    {
         $snippetChunks = [];
         foreach ($snippets as $snippet) {
             $snippetChunks[] = new SnippetChunk($snippet);
