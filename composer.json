@@ -12,11 +12,12 @@
         "php": "^8.3",
         "psr/log": "^1.0",
         "psr/http-message": "^1.0",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev" : {
         "friendsofphp/php-cs-fixer": "^3.64",
         "phpmd/phpmd": "^2.15",
+        "php-parallel-lint/php-parallel-lint": "^1.4",
         "phpstan/phpstan": "^1.11",
         "phpunit/phpunit" : "^10.5",
         "rector/rector": "^1.2"
@@ -27,7 +28,7 @@
         }
     },
     "scripts": {
-        "lint": "php -l src",
+        "lint": "parallel-lint src",
         "fix": "php-cs-fixer fix",
         "rector": "rector process",
         "phpstan": "phpstan analyse",
