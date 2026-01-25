@@ -16,11 +16,11 @@ class OrderByColumnsChunkTest extends TestCase
         ];
         $columnsChunk = new OrderByColumnsChunk($orderByChunks);
         $text = $columnsChunk->getText();
-        $this->assertContains('<OrderByColumns>', $text);
-        $this->assertContains('<OrderBy>', $text);
-        $this->assertContains('<Column>name</Column>', $text);
-        $this->assertContains('<Direction>Ascending</Direction>', $text);
-        $this->assertContains('<Column>sex</Column>', $text);
-        $this->assertContains('<Direction>Descending</Direction>', $text);
+        $this->assertStringContainsString('<OrderByColumns>', $text);
+        $this->assertStringContainsString('<OrderBy>', $text);
+        $this->assertStringContainsString('<Column>name</Column>', $text);
+        $this->assertStringContainsString('<Direction>Ascending</Direction>', $text);
+        $this->assertStringContainsString('<Column>sex</Column>', $text);
+        $this->assertStringContainsString('<Direction>Descending</Direction>', $text);
     }
 }

@@ -17,13 +17,13 @@ class ColumnsChunkTest extends TestCase
 
         $columnsChunk = new ColumnsChunk($columnsChunks);
         $text = $columnsChunk->getText();
-        $this->assertContains('<Columns>', $text);
-        $this->assertContains('<Column>', $text);
-        $this->assertContains('<Name>name</Name>', $text);
-        $this->assertContains('<Value><![CDATA[Alex<br/>Aksef]]></Value>', $text);
-        $this->assertContains('<Name>sex</Name>', $text);
-        $this->assertContains('<Value>male</Value>', $text);
-        $this->assertContains('<Name>age</Name>', $text);
-        $this->assertContains('<Value>22</Value>', $text);
+        $this->assertStringContainsString('<Columns>', $text);
+        $this->assertStringContainsString('<Column>', $text);
+        $this->assertStringContainsString('<Name>name</Name>', $text);
+        $this->assertStringContainsString('<Value><![CDATA[Alex<br/>Aksef]]></Value>', $text);
+        $this->assertStringContainsString('<Name>sex</Name>', $text);
+        $this->assertStringContainsString('<Value>male</Value>', $text);
+        $this->assertStringContainsString('<Name>age</Name>', $text);
+        $this->assertStringContainsString('<Value>22</Value>', $text);
     }
 }

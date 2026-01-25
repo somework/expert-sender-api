@@ -12,7 +12,7 @@ class GroupChunkTest extends TestCase
         $groupChunk->addChunk(new SimpleChunk('Name', 'Alex'));
         $groupChunk->addChunk(new SimpleChunk('Age', 22));
         $text = $groupChunk->getText();
-        $this->assertContains('<Name>Alex</Name>', $text);
-        $this->assertContains('<Age>22</Age>', $text);
+        $this->assertStringContainsString('<Name>Alex</Name>', $text);
+        $this->assertStringContainsString('<Age>22</Age>', $text);
     }
 }
