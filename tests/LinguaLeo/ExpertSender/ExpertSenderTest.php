@@ -22,7 +22,7 @@ class ExpertSenderTest extends TestCase
     /** @var array|null */
     protected $params;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
