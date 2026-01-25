@@ -9,17 +9,28 @@
         }
     ],
     "require": {
-        "php": ">=5.6.0",
+        "php": "^8.3",
         "psr/log": "^1.0",
         "psr/http-message": "^1.0",
         "guzzlehttp/guzzle": "^6.3"
     },
     "require-dev" : {
-        "phpunit/phpunit" : "^6|^5.7"
+        "friendsofphp/php-cs-fixer": "^3.64",
+        "phpmd/phpmd": "^2.15",
+        "phpstan/phpstan": "^1.11",
+        "phpunit/phpunit" : "^10.5",
+        "rector/rector": "^1.2"
     },
     "autoload": {
         "psr-0": {
             "LinguaLeo\\": "src/"
         }
+    },
+    "scripts": {
+        "lint": "php -l src",
+        "fix": "php-cs-fixer fix",
+        "rector": "rector process",
+        "phpstan": "phpstan analyse",
+        "phpmd": "phpmd src text phpmd.xml"
     }
 }
