@@ -4,5 +4,5 @@ namespace LinguaLeo\ExpertSender\Chunks;
 
 interface ChunkInterface
 {
-    public function getText();
+    public function getText(): string;
 }
