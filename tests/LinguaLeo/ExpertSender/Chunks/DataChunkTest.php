@@ -2,6 +2,7 @@
 
 namespace LinguaLeo\ExpertSender\Chunks;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class DataChunkTest extends TestCase
@@ -9,8 +10,8 @@ class DataChunkTest extends TestCase
     public function testGetText(): void
     {
         /**
-         * @var SimpleChunk|\PHPUnit_Framework_MockObject_MockObject
-         * @var SimpleChunk|\PHPUnit_Framework_MockObject_MockObject $bodyChunk2
+         * @var SimpleChunk|MockObject
+         * @var SimpleChunk|MockObject $bodyChunk2
          */
         $bodyChunk1 = $this
             ->getMockBuilder(SimpleChunk::class)

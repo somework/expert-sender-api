@@ -6,12 +6,12 @@ class Column
 {
     /** @var string */
     protected $name;
-    /** @var string */
+    /** @var bool|float|int|string|null */
     protected $value;
 
     /**
      * @param string $name
-     * @param string $value
+     * @param bool|float|int|string|null $value
      */
     public function __construct($name, $value = null)
     {
@@ -33,7 +33,7 @@ class Column
     }
 
     /**
-     * @return string
+     * @return bool|float|int|string|null
      */
     public function getValue()
     {

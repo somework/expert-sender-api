@@ -48,9 +48,9 @@ class ExpertSender implements LoggerAwareInterface
     /**
      * @param string                           $endpointUrl - url without /Api
      * @param string                           $apiKey
-     * @param \GuzzleHttp\ClientInterface|null $client
+     * @param \GuzzleHttp\ClientInterface $client
      */
-    public function __construct($endpointUrl, $apiKey, ClientInterface $client, LoggerInterface $logger = null)
+    public function __construct($endpointUrl, $apiKey, ClientInterface $client, ?LoggerInterface $logger = null)
     {
         $endpointUrl = rtrim($endpointUrl, '/').'/';
         $this->endpointUrl = $endpointUrl.'Api/';

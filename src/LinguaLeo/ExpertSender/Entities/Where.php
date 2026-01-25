@@ -8,13 +8,13 @@ class Where
     protected $columnName;
     /** @var string */
     protected $operator;
-    /** @var string */
+    /** @var bool|float|int|string */
     protected $value;
 
     /**
      * @param string $columnName
      * @param string $operator
-     * @param string $value
+     * @param bool|float|int|string $value
      */
     public function __construct($columnName, $operator, $value)
     {
@@ -40,7 +40,7 @@ class Where
     }
 
     /**
-     * @return string
+     * @return bool|float|int|string
      */
     public function getValue()
     {

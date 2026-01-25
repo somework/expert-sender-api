@@ -47,7 +47,7 @@ class ExpertSenderTest extends TestCase
             $this->markTestSkipped('params.json is required to run this test');
         }
 
-        return json_decode(file_get_contents($paramsPath), 1);
+        return json_decode(file_get_contents($paramsPath), true);
     }
 
     public function getParam(string $param)

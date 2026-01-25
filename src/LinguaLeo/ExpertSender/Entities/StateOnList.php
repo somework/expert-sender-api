@@ -5,7 +5,7 @@ namespace LinguaLeo\ExpertSender\Entities;
 class StateOnList
 {
     /**
-     * @var string
+     * @var int
      */
     private $listId;
 
@@ -25,7 +25,7 @@ class StateOnList
     /**
      * StateOnList constructor.
      *
-     * @param string    $listId
+     * @param int       $listId
      * @param string    $name
      * @param string    $status
      * @param \DateTime $subscribedOn
@@ -39,7 +39,7 @@ class StateOnList
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getListId()
     {
@@ -47,7 +47,7 @@ class StateOnList
     }
 
     /**
-     * @param string $listId
+     * @param int $listId
      */
     public function setListId($listId): static
     {

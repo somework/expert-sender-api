@@ -120,11 +120,11 @@ class AddUserToList
     }
 
     /**
-     * @param int|null $id
+     * @param int|string|null $id
      *
      * @throws BadMethodCallException
      */
-    public function setId($id = null): static
+    public function setId(int|string|null $id = null): static
     {
         $this->exceptionIfFrozen();
 
