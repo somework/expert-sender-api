@@ -48,11 +48,9 @@ class AddUserToListTest extends TestCase
         $this->assertSame($value, $this->request->$getter());
     }
 
-    /**
-     * @expectedException \BadMethodCallException
-     */
     public function testCannotBeFrozenWhenInvalid()
     {
+        $this->expectException(\BadMethodCallException::class);
         $this->request->freeze();
     }
 
@@ -70,13 +68,14 @@ class AddUserToListTest extends TestCase
     /**
      * @depends      testIsValidWithMinimalSetup
      * @dataProvider provideMethodsValues
-     * @expectedException \BadMethodCallException
      *
      * @param $field
      * @param $value
      */
     public function testCannotBeChangedWhenFrozen($field, $value)
     {
+        $this->expectException(\BadMethodCallException::class);
+
         // minimal setup
         $this->request->setListId(1);
         $this->request->setEmail('test@example.com');
@@ -126,11 +125,9 @@ class AddUserToListTest extends TestCase
         $this->assertSame($properties, $this->request->getProperties());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testInvalidModeCannotBeSet()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->request->setMode('invalid_mode');
     }
 

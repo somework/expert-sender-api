@@ -13,7 +13,7 @@ class HeaderChunkTest extends TestCase
          */
         $bodyChunk = $this
             ->getMockBuilder(SimpleChunk::class)
-            ->setMethods(['getText'])
+            ->onlyMethods(['getText'])
             ->disableOriginalConstructor()
             ->getMock();
         $bodyChunk->expects($this->once())->method('getText')->will($this->returnValue('body'));
@@ -21,7 +21,7 @@ class HeaderChunkTest extends TestCase
         $headerChunk = new HeaderChunk('api-key', $bodyChunk);
         $text = $headerChunk->getText();
 
-        $this->assertRegExp('~body~', $text);
-        $this->assertRegExp('~api-key~', $text);
+        $this->assertMatchesRegularExpression('~body~', $text);
+        $this->assertMatchesRegularExpression('~api-key~', $text);
     }
 }

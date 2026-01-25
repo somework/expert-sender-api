@@ -124,7 +124,7 @@ class ExpertSenderTest extends TestCase
         $invalidDeleteResult = $this->expertSender->deleteUser($randomEmail);
         $this->assertFalse($invalidDeleteResult->isOk());
         $this->assertEquals(404, $invalidDeleteResult->getErrorCode());
-        $this->assertRegExp('~not found~', $invalidDeleteResult->getErrorMessage());
+        $this->assertMatchesRegularExpression('~not found~', $invalidDeleteResult->getErrorMessage());
     }
 
     /**

@@ -11,4 +11,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ExpertSenderResponseTest extends TestCase
 {
+    public function testDeprecatedPlaceholder()
+    {
+        $this->markTestSkipped('Deprecated test placeholder.');
+    }
 }
