@@ -13,15 +13,15 @@ class SnippetChunk implements ChunkInterface
         </Snippet>
 EOD;
 
-    /** @var Snippet */
-    protected $snippet;
+    protected \LinguaLeo\ExpertSender\Entities\Snippet $snippet;
 
     public function __construct(Snippet $snippet)
     {
         $this->snippet = $snippet;
     }
 
-    public function getText()
+    #[\Override]
+    public function getText(): string
     {
         return sprintf(self::PATTERN, $this->snippet->getName(), $this->snippet->getValue());
     }

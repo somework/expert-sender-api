@@ -12,21 +12,15 @@ class WhereChunk implements ChunkInterface
         </Where>
 EOD;
 
-    /** @var Where */
-    private $where;
+    private \LinguaLeo\ExpertSender\Entities\Where $where;
 
-    /**
-     * @param Where $where
-     */
     public function __construct(Where $where)
     {
         $this->where = $where;
     }
 
-    /**
-     * @return string
-     */
-    public function getText()
+    #[\Override]
+    public function getText(): string
     {
         $text = [];
         $text[] = (new SimpleChunk('ColumnName', $this->where->getColumnName()))->getText();

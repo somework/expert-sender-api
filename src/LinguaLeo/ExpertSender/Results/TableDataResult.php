@@ -9,9 +9,6 @@ class TableDataResult extends ApiResult
     /** @var array */
     protected $data = [];
 
-    /**
-     * @param ResponseInterface $response
-     */
     public function __construct(ResponseInterface $response)
     {
         parent::__construct($response);
@@ -45,7 +42,7 @@ class TableDataResult extends ApiResult
      *
      * @return string
      */
-    private function removeBOM($text)
+    private function removeBOM($text): ?string
     {
         $bom = pack('H*', 'EFBBBF');
 

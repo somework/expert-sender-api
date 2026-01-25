@@ -16,7 +16,7 @@ class UserIdResult extends ApiResult
         $this->parseBody();
     }
 
-    public function parseBody()
+    public function parseBody(): void
     {
         if (!$this->isOk()) {
             throw new ExpertSenderException("Can't get user id");
@@ -25,7 +25,7 @@ class UserIdResult extends ApiResult
         $xml = new \SimpleXMLElement($body);
 
         $idXml = $xml->xpath('/ApiResponse/Data/Id');
-        if (!is_array($idXml) || count($idXml) === 0) {
+        if (!is_array($idXml) || $idXml === []) {
             throw new ExpertSenderException("Can't get user id");
         }
 

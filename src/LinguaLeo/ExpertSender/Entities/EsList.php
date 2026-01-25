@@ -4,29 +4,14 @@ namespace LinguaLeo\ExpertSender\Entities;
 
 class EsList
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private ?int $id = null;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var string
-     */
-    private $friendlyName;
+    private ?string $friendlyName = null;
 
-    /**
-     * @var string
-     */
-    private $language;
-    /**
-     * @var string
-     */
-    private $optInMod;
+    private ?string $language = null;
+    private string $optInMod;
 
     public function __construct($id, $name, $friendlyName, $language, $optInMod)
     {
@@ -48,10 +33,8 @@ class EsList
 
     /**
      * @param int $id
-     *
-     * @return EsList
      */
-    public function setId($id)
+    public function setId($id): static
     {
         $this->id = (int) $id;
 
@@ -68,10 +51,8 @@ class EsList
 
     /**
      * @param string $name
-     *
-     * @return EsList
      */
-    public function setName($name)
+    public function setName($name): static
     {
         $this->name = (string) $name;
 
@@ -88,10 +69,8 @@ class EsList
 
     /**
      * @param string $friendlyName
-     *
-     * @return EsList
      */
-    public function setFriendlyName($friendlyName)
+    public function setFriendlyName($friendlyName): static
     {
         $this->friendlyName = (string) $friendlyName;
 
@@ -108,10 +87,8 @@ class EsList
 
     /**
      * @param string $language
-     *
-     * @return EsList
      */
-    public function setLanguage($language)
+    public function setLanguage($language): static
     {
         $this->language = (string) $language;
 
@@ -128,10 +105,8 @@ class EsList
 
     /**
      * @param string $optInMod
-     *
-     * @return EsList
      */
-    public function setOptInMod($optInMod)
+    public function setOptInMod($optInMod): static
     {
         $this->optInMod = (string) $optInMod;
 

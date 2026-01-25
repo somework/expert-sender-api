@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class ReceiversChunkTest extends TestCase
 {
-    public function testGetText()
+    public function testGetText(): void
     {
         $receiverChunks = [
             new ReceiverChunk(new Receiver('simple@email.com')),

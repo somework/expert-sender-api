@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PrimaryKeyColumnsChunkTest extends TestCase
 {
-    public function testGetText()
+    public function testGetText(): void
     {
         $columnsChunks = [
             new ColumnChunk(new Column('name', 'Alex<br/>')),

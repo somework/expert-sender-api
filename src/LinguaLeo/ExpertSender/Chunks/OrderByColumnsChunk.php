@@ -10,10 +10,8 @@ class OrderByColumnsChunk extends ArrayChunk
 </OrderByColumns>
 EOD;
 
-    /**
-     * @return string
-     */
-    protected function getPattern()
+    #[\Override]
+    protected function getPattern(): string
     {
         return self::PATTERN;
     }

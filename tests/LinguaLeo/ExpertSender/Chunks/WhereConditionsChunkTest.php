@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class WhereConditionsChunkTest extends TestCase
 {
-    public function testGetText()
+    public function testGetText(): void
     {
         $whereChunks = [
             new WhereChunk(new Where('name', ExpertSenderEnum::OPERATOR_EQUALS, 'Alex')),

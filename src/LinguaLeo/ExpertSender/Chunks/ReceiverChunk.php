@@ -12,15 +12,15 @@ class ReceiverChunk implements ChunkInterface
         </Receiver>
 EOD;
 
-    /** @var Receiver */
-    protected $receiver;
+    protected \LinguaLeo\ExpertSender\Entities\Receiver $receiver;
 
     public function __construct(Receiver $receiver)
     {
         $this->receiver = $receiver;
     }
 
-    public function getText()
+    #[\Override]
+    public function getText(): string
     {
         $textStrings = [];
 

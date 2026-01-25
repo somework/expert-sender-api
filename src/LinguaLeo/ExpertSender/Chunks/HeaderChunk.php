@@ -11,14 +11,12 @@ class HeaderChunk implements ChunkInterface
 </ApiRequest>
 EOD;
 
-    /** @var ChunkInterface */
-    protected $bodyChunk;
+    protected \LinguaLeo\ExpertSender\Chunks\ChunkInterface $bodyChunk;
     /** @var string */
     protected $apiKey;
 
     /**
      * @param string         $apiKey
-     * @param ChunkInterface $bodyChunk
      */
     public function __construct($apiKey, ChunkInterface $bodyChunk)
     {
@@ -26,10 +24,8 @@ EOD;
         $this->bodyChunk = $bodyChunk;
     }
 
-    /**
-     * @return string
-     */
-    public function getText()
+    #[\Override]
+    public function getText(): string
     {
         return sprintf(self::PATTERN, $this->apiKey, $this->bodyChunk->getText());
     }

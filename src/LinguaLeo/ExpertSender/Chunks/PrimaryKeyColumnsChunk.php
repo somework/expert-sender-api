@@ -10,7 +10,8 @@ class PrimaryKeyColumnsChunk extends ArrayChunk
 </PrimaryKeyColumns>
 EOD;
 
-    protected function getPattern()
+    #[\Override]
+    protected function getPattern(): string
     {
         return self::PATTERN;
     }

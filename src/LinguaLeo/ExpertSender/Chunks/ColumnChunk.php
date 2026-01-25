@@ -12,12 +12,8 @@ class ColumnChunk implements ChunkInterface
         </Column>
 EOD;
 
-    /** @var Column */
-    private $column;
+    private \LinguaLeo\ExpertSender\Entities\Column $column;
 
-    /**
-     * @param Column $column
-     */
     public function __construct(Column $column)
     {
         $this->column = $column;
@@ -26,6 +22,7 @@ EOD;
     /**
      * @return string
      */
+    #[\Override]
     public function getText()
     {
         if (!$this->column->hasValue()) {
