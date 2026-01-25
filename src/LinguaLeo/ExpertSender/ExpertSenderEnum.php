@@ -42,34 +42,22 @@ final class ExpertSenderEnum
     const string DATE_TIME_FORMAT = 'Y-m-d\TH:i:s';
     const string DATE_TIME_TIMEZONE = 'Europe/Moscow';
 
-    /**
-     * @return array
-     */
-    public static function getTypes()
+    public static function getTypes(): array
     {
         return [self::TYPE_BOOLEAN, self::TYPE_STRING, self::TYPE_INTEGER, self::TYPE_DATE, self::TYPE_DATE_TIME];
     }
 
-    /**
-     * @return array
-     */
-    public static function getOperators()
+    public static function getOperators(): array
     {
         return [self::OPERATOR_EQUALS, self::OPERATOR_GREATER, self::OPERATOR_LOWER, self::OPERATOR_LIKE];
     }
 
-    /**
-     * @return array
-     */
-    public static function getOrders()
+    public static function getOrders(): array
     {
         return [self::ORDER_ASCENDING, self::ORDER_DESCENDING];
     }
 
-    /**
-     * @return array
-     */
-    public static function getModes()
+    public static function getModes(): array
     {
         return [
             self::MODE_ADD_AND_UPDATE,
@@ -80,7 +68,7 @@ final class ExpertSenderEnum
         ];
     }
 
-    public static function getSubscribersGetModes()
+    public static function getSubscribersGetModes(): array
     {
         return [
             self::MODE_SUBSCRIBERS_SHORT,

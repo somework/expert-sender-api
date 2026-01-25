@@ -10,11 +10,8 @@ class SnippetsChunk extends ArrayChunk
 </Snippets>
 EOD;
 
-    /**
-     * @return string
-     */
     #[\Override]
-    protected function getPattern()
+    protected function getPattern(): string
     {
         return self::PATTERN;
     }

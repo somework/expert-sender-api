@@ -12,8 +12,7 @@ class ReceiverChunk implements ChunkInterface
         </Receiver>
 EOD;
 
-    /** @var Receiver */
-    protected $receiver;
+    protected \LinguaLeo\ExpertSender\Entities\Receiver $receiver;
 
     public function __construct(Receiver $receiver)
     {
@@ -21,7 +20,7 @@ EOD;
     }
 
     #[\Override]
-    public function getText()
+    public function getText(): string
     {
         $textStrings = [];
 

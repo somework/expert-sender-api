@@ -15,7 +15,6 @@ EOD;
 
     /**
      * @param mixed $xsiType
-     * @param array $chunksArray
      */
     public function __construct($xsiType = null, array $chunksArray = [])
     {
@@ -23,22 +22,16 @@ EOD;
         $this->xsiType = $xsiType;
     }
 
-    /**
-     * @return string
-     */
     #[\Override]
-    public function getText()
+    public function getText(): string
     {
         $xsiType = $this->xsiType ? sprintf('xsi:type="%s"', $this->xsiType) : '';
 
         return sprintf($this->getPattern(), $xsiType, $this->getSubChunksText());
     }
 
-    /**
-     * @return string
-     */
     #[\Override]
-    protected function getPattern()
+    protected function getPattern(): string
     {
         return self::PATTERN;
     }

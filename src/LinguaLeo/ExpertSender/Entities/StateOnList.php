@@ -48,10 +48,8 @@ class StateOnList
 
     /**
      * @param string $listId
-     *
-     * @return StateOnList
      */
-    public function setListId($listId)
+    public function setListId($listId): static
     {
         $this->listId = $listId;
 
@@ -68,10 +66,8 @@ class StateOnList
 
     /**
      * @param string $name
-     *
-     * @return StateOnList
      */
-    public function setName($name)
+    public function setName($name): static
     {
         $this->name = $name;
 
@@ -88,10 +84,8 @@ class StateOnList
 
     /**
      * @param string $status
-     *
-     * @return StateOnList
      */
-    public function setStatus($status)
+    public function setStatus($status): static
     {
         $this->status = $status;
 
@@ -108,10 +102,8 @@ class StateOnList
 
     /**
      * @param \DateTime $subscribedOn
-     *
-     * @return StateOnList
      */
-    public function setSubscribedOn($subscribedOn)
+    public function setSubscribedOn($subscribedOn): static
     {
         $this->subscribedOn = $subscribedOn;
 

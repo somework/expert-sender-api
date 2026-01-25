@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class OrderByColumnsChunkTest extends TestCase
 {
-    public function testGetText()
+    public function testGetText(): void
     {
         $orderByChunks = [
             new OrderByChunk(new OrderBy('name', ExpertSenderEnum::ORDER_ASCENDING)),

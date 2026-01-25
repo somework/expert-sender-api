@@ -10,11 +10,8 @@ class PropertiesChunk extends ArrayChunk
         </Properties>
 EOD;
 
-    /**
-     * @return string
-     */
     #[\Override]
-    protected function getPattern()
+    protected function getPattern(): string
     {
         return self::PATTERN;
     }

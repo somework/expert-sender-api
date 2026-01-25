@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class SnippetsChunkTest extends TestCase
 {
-    public function testGetText()
+    public function testGetText(): void
     {
         $snippetChunks = [
             new SnippetChunk(new Snippet('test', 'value')),

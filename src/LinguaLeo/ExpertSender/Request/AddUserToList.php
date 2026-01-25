@@ -13,20 +13,11 @@ use LinguaLeo\ExpertSender\ExpertSenderEnum;
  */
 class AddUserToList
 {
-    /**
-     * @var bool
-     */
-    private $frozen = false;
+    private bool $frozen = false;
 
-    /**
-     * @var int|null
-     */
-    private $listId;
+    private ?int $listId = null;
 
-    /**
-     * @var int|null
-     */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @var string|null
@@ -63,20 +54,11 @@ class AddUserToList
      */
     private $vendor;
 
-    /**
-     * @var bool
-     */
-    private $force = false;
+    private bool $force = false;
 
-    /**
-     * @var string
-     */
-    private $mode = ExpertSenderEnum::MODE_ADD_AND_UPDATE;
+    private string $mode = ExpertSenderEnum::MODE_ADD_AND_UPDATE;
 
-    /**
-     * @var array
-     */
-    private $properties = [];
+    private array $properties = [];
 
     /**
      * @var string|null
@@ -88,10 +70,7 @@ class AddUserToList
      */
     private $customSubscriberId;
 
-    /**
-     * @return bool
-     */
-    public function isValid()
+    public function isValid(): bool
     {
         return null !== $this->email && null !== $this->listId;
     }
@@ -106,10 +85,8 @@ class AddUserToList
 
     /**
      * @throws BadMethodCallException
-     *
-     * @return AddUserToList
      */
-    public function freeze()
+    public function freeze(): static
     {
         if (!$this->isValid()) {
             throw new BadMethodCallException('AddUserToListRequest cannot be frozen when is invalid.');
@@ -124,10 +101,8 @@ class AddUserToList
      * @param int|null $listId
      *
      * @throws BadMethodCallException
-     *
-     * @return AddUserToList
      */
-    public function setListId($listId = null)
+    public function setListId($listId = null): static
     {
         $this->exceptionIfFrozen();
 
@@ -148,10 +123,8 @@ class AddUserToList
      * @param int|null $id
      *
      * @throws BadMethodCallException
-     *
-     * @return AddUserToList
      */
-    public function setId($id = null)
+    public function setId($id = null): static
     {
         $this->exceptionIfFrozen();
 
@@ -172,10 +145,8 @@ class AddUserToList
      * @param string|null $email
      *
      * @throws BadMethodCallException
-     *
-     * @return AddUserToList
      */
-    public function setEmail($email = null)
+    public function setEmail($email = null): static
     {
         $this->exceptionIfFrozen();
 
@@ -196,10 +167,8 @@ class AddUserToList
      * @param string|null $firstName
      *
      * @throws BadMethodCallException
-     *
-     * @return AddUserToList
      */
-    public function setFirstName($firstName = null)
+    public function setFirstName($firstName = null): static
     {
         $this->exceptionIfFrozen();
 
@@ -220,10 +189,8 @@ class AddUserToList
      * @param string|null $lastName
      *
      * @throws BadMethodCallException
-     *
-     * @return AddUserToList
      */
-    public function setLastName($lastName = null)
+    public function setLastName($lastName = null): static
     {
         $this->exceptionIfFrozen();
 
@@ -244,10 +211,8 @@ class AddUserToList
      * @param string|null $name
      *
      * @throws BadMethodCallException
-     *
-     * @return AddUserToList
      */
-    public function setName($name = null)
+    public function setName($name = null): static
     {
         $this->exceptionIfFrozen();
 
@@ -268,10 +233,8 @@ class AddUserToList
      * @param string|null $ip
      *
      * @throws BadMethodCallException
-     *
-     * @return AddUserToList
      */
-    public function setIp($ip = null)
+    public function setIp($ip = null): static
     {
         $this->exceptionIfFrozen();
 
@@ -293,10 +256,8 @@ class AddUserToList
      *
      * @throws BadMethodCallException
      * @throws \InvalidArgumentException
-     *
-     * @return AddUserToList
      */
-    public function setTrackingCode($trackingCode = null)
+    public function setTrackingCode($trackingCode = null): static
     {
         $this->exceptionIfFrozen();
 
@@ -321,10 +282,8 @@ class AddUserToList
      * @param string|null $vendor
      *
      * @throws BadMethodCallException
-     *
-     * @return AddUserToList
      */
-    public function setVendor($vendor = null)
+    public function setVendor($vendor = null): static
     {
         $this->exceptionIfFrozen();
 
@@ -346,10 +305,8 @@ class AddUserToList
      *
      * @throws BadMethodCallException
      * @throws \InvalidArgumentException
-     *
-     * @return AddUserToList
      */
-    public function setForce($force)
+    public function setForce($force): static
     {
         $this->exceptionIfFrozen();
 
@@ -371,14 +328,12 @@ class AddUserToList
     }
 
     /**
-     * @param string $mode
      *
      * @throws BadMethodCallException
      * @throws \InvalidArgumentException
      *
-     * @return AddUserToList
      */
-    public function setMode($mode)
+    public function setMode(string $mode): static
     {
         $this->exceptionIfFrozen();
 
@@ -403,10 +358,8 @@ class AddUserToList
      * @param string|null $phone
      *
      * @throws BadMethodCallException
-     *
-     * @return AddUserToList
      */
-    public function setPhone($phone = null)
+    public function setPhone($phone = null): static
     {
         $this->exceptionIfFrozen();
         $this->phone = $phone;
@@ -426,10 +379,8 @@ class AddUserToList
      * @param string|null $customSubscriberId
      *
      * @throws BadMethodCallException
-     *
-     * @return AddUserToList
      */
-    public function setCustomSubscriberId($customSubscriberId = null)
+    public function setCustomSubscriberId($customSubscriberId = null): static
     {
         $this->exceptionIfFrozen();
         $this->customSubscriberId = $customSubscriberId;
@@ -446,13 +397,11 @@ class AddUserToList
     }
 
     /**
-     * @param Property $property
      *
      * @throws BadMethodCallException
      *
-     * @return AddUserToList
      */
-    public function addProperty(Property $property)
+    public function addProperty(Property $property): static
     {
         $this->exceptionIfFrozen();
 
@@ -462,13 +411,11 @@ class AddUserToList
     }
 
     /**
-     * @param array $properties
      *
      * @throws BadMethodCallException
      *
-     * @return AddUserToList
      */
-    public function setProperties(array $properties)
+    public function setProperties(array $properties): static
     {
         $this->exceptionIfFrozen();
 
@@ -492,7 +439,7 @@ class AddUserToList
     /**
      * @throws BadMethodCallException
      */
-    private function exceptionIfFrozen()
+    private function exceptionIfFrozen(): void
     {
         if ($this->frozen) {
             throw new BadMethodCallException('Attributes cannot be set when AddUserToListRequest is frozen.');

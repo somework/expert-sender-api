@@ -13,8 +13,7 @@ class PropertyChunk implements ChunkInterface
         </Property>
 EOD;
 
-    /** @var Property */
-    protected $property;
+    protected \LinguaLeo\ExpertSender\Entities\Property $property;
     protected $type;
     protected $value;
 
@@ -24,7 +23,7 @@ EOD;
     }
 
     #[\Override]
-    public function getText()
+    public function getText(): string
     {
         return sprintf(
             self::PATTERN,

@@ -39,7 +39,7 @@ class ExpertSenderTest extends TestCase
             ->setEmail('example@example.com');
     }
 
-    public function getParams()
+    public function getParams(): mixed
     {
         $paramsPath = __DIR__.'/params.json';
 
@@ -50,7 +50,7 @@ class ExpertSenderTest extends TestCase
         return json_decode(file_get_contents($paramsPath), 1);
     }
 
-    public function getParam($param)
+    public function getParam(string $param)
     {
         if (!$this->params) {
             $this->params = $this->getParams();
@@ -96,7 +96,7 @@ class ExpertSenderTest extends TestCase
         return $this->getParam('testTableName');
     }
 
-    public function testLists()
+    public function testLists(): void
     {
         $randomEmail = sprintf('some_random_%s@gmail.com', mt_rand(0, 100000000000).mt_rand(0, 1000000000000));
 
@@ -131,7 +131,7 @@ class ExpertSenderTest extends TestCase
     /**
      * @group table
      */
-    public function testAddTableRow()
+    public function testAddTableRow(): void
     {
         $result = $this->expertSender->addTableRow($this->getTestTableName(), [
             new Column('name', 'Alex'),
@@ -146,7 +146,7 @@ class ExpertSenderTest extends TestCase
      * @group   table
      * @depends testAddTableRow
      */
-    public function testGetTableData()
+    public function testGetTableData(): void
     {
         $result = $this->expertSender->getTableData(
             $this->getTestTableName(),
@@ -163,7 +163,7 @@ class ExpertSenderTest extends TestCase
      * @group   table
      * @depends testAddTableRow
      */
-    public function testUpdateTableRow()
+    public function testUpdateTableRow(): void
     {
         $result = $this->expertSender->updateTableRow($this->getTestTableName(), [
             new Column('name', 'Alex'),
@@ -179,7 +179,7 @@ class ExpertSenderTest extends TestCase
      * @group   table
      * @depends testUpdateTableRow
      */
-    public function testDeleteTableRow()
+    public function testDeleteTableRow(): void
     {
         $result = $this->expertSender->deleteTableRow($this->getTestTableName(), [
             new Column('name', 'Alex'),
@@ -188,7 +188,7 @@ class ExpertSenderTest extends TestCase
         $this->assertTrue($result->isOk());
     }
 
-    public function testChangeEmail()
+    public function testChangeEmail(): void
     {
         $randomEmail = sprintf('some_random_%s@gmail.com', mt_rand(0, 100000000000).mt_rand(0, 1000000000000));
         $randomEmail2 = sprintf('some_random_%s@gmail.com', mt_rand(0, 100000000000).mt_rand(0, 1000000000000));
@@ -219,7 +219,7 @@ class ExpertSenderTest extends TestCase
         $this->assertTrue($exceptionThrown);
     }
 
-    public function testSendTrigger()
+    public function testSendTrigger(): void
     {
         $randomEmail = sprintf($this->getTestEmailPattern(), mt_rand(0, 100000000000).mt_rand(0, 1000000000000));
         $listId = $this->getTestListId();
@@ -236,7 +236,7 @@ class ExpertSenderTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testSendTransactional()
+    public function testSendTransactional(): void
     {
         $randomEmail = sprintf($this->getTestEmailPattern(), mt_rand(0, 100000000000).mt_rand(0, 1000000000000));
         $listId = $this->getTestListId();
@@ -257,7 +257,7 @@ class ExpertSenderTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testSendSystemTransactional()
+    public function testSendSystemTransactional(): void
     {
         $randomEmail = sprintf($this->getTestEmailPattern(), mt_rand(0, 100000000000).mt_rand(0, 1000000000000));
 
@@ -270,7 +270,7 @@ class ExpertSenderTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testAddUserToListAcceptsAndFreezesRequest()
+    public function testAddUserToListAcceptsAndFreezesRequest(): void
     {
         $result = $this->expertSender->addUserToList($this->addUserToListRequest);
 

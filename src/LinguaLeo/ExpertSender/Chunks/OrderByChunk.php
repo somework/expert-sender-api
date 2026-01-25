@@ -12,22 +12,15 @@ class OrderByChunk implements ChunkInterface
         </OrderBy>
 EOD;
 
-    /** @var OrderBy */
-    private $orderBy;
+    private \LinguaLeo\ExpertSender\Entities\OrderBy $orderBy;
 
-    /**
-     * @param OrderBy $orderBy
-     */
     public function __construct(OrderBy $orderBy)
     {
         $this->orderBy = $orderBy;
     }
 
-    /**
-     * @return string
-     */
     #[\Override]
-    public function getText()
+    public function getText(): string
     {
         $text = [];
         $text[] = (new SimpleChunk('Column', $this->orderBy->getColumnName()))->getText();

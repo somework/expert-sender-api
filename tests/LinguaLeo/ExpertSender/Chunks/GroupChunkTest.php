@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class GroupChunkTest extends TestCase
 {
-    public function testGetText()
+    public function testGetText(): void
     {
         $groupChunk = new GroupChunk();
         $groupChunk->addChunk(new SimpleChunk('Name', 'Alex'));

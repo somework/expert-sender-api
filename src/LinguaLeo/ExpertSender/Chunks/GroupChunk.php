@@ -15,19 +15,13 @@ class GroupChunk implements ChunkInterface
         $this->chunks = $chunks;
     }
 
-    /**
-     * @param ChunkInterface $chunk
-     */
-    public function addChunk(ChunkInterface $chunk)
+    public function addChunk(ChunkInterface $chunk): void
     {
         $this->chunks[] = $chunk;
     }
 
-    /**
-     * @return string
-     */
     #[\Override]
-    public function getText()
+    public function getText(): string
     {
         $text = [];
         foreach ($this->chunks as $chunk) {

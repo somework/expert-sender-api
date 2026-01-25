@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class DataChunkTest extends TestCase
 {
-    public function testGetText()
+    public function testGetText(): void
     {
         /**
          * @var SimpleChunk|\PHPUnit_Framework_MockObject_MockObject

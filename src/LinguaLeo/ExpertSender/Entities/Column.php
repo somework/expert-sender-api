@@ -27,10 +27,7 @@ class Column
         return $this->name;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasValue()
+    public function hasValue(): bool
     {
         return $this->value !== null;
     }
