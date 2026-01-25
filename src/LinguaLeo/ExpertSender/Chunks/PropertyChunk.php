@@ -23,6 +23,7 @@ EOD;
         $this->property = $property;
     }
 
+    #[\Override]
     public function getText()
     {
         return sprintf(

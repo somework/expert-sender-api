@@ -29,6 +29,7 @@ EOD;
     /**
      * @return string
      */
+    #[\Override]
     public function getText()
     {
         return sprintf(self::PATTERN, $this->apiKey, $this->bodyChunk->getText());

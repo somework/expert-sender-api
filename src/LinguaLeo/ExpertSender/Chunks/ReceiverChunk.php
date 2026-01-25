@@ -20,6 +20,7 @@ EOD;
         $this->receiver = $receiver;
     }
 
+    #[\Override]
     public function getText()
     {
         $textStrings = [];

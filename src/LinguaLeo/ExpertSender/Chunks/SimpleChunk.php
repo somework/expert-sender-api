@@ -17,6 +17,7 @@ EOD;
         $this->value = $value;
     }
 
+    #[\Override]
     public function getText()
     {
         return sprintf(self::PATTERN, $this->name, $this->value, $this->name);

@@ -26,6 +26,7 @@ EOD;
     /**
      * @return string
      */
+    #[\Override]
     public function getText()
     {
         $text = [];

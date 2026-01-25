@@ -21,6 +21,7 @@ EOD;
         $this->snippet = $snippet;
     }
 
+    #[\Override]
     public function getText()
     {
         return sprintf(self::PATTERN, $this->snippet->getName(), $this->snippet->getValue());

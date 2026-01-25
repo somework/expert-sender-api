@@ -26,6 +26,7 @@ EOD;
     /**
      * @return string
      */
+    #[\Override]
     public function getText()
     {
         $xsiType = $this->xsiType ? sprintf('xsi:type="%s"', $this->xsiType) : '';
@@ -36,6 +37,7 @@ EOD;
     /**
      * @return string
      */
+    #[\Override]
     protected function getPattern()
     {
         return self::PATTERN;

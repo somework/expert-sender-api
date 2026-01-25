@@ -185,6 +185,7 @@ class AddUserToListTest extends TestCase
         ];
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->request = new AddUserToList();

@@ -26,6 +26,7 @@ class GroupChunk implements ChunkInterface
     /**
      * @return string
      */
+    #[\Override]
     public function getText()
     {
         $text = [];

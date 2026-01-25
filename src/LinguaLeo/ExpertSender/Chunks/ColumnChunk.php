@@ -26,6 +26,7 @@ EOD;
     /**
      * @return string
      */
+    #[\Override]
     public function getText()
     {
         if (!$this->column->hasValue()) {

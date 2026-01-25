@@ -26,6 +26,7 @@ abstract class ArrayChunk implements ChunkInterface
     /**
      * @return string
      */
+    #[\Override]
     public function getText()
     {
         return $this->chunks ? sprintf($this->getPattern(), $this->getSubChunksText()) : '';

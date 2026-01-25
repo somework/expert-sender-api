@@ -13,6 +13,7 @@ EOD;
     /**
      * @return string
      */
+    #[\Override]
     protected function getPattern()
     {
         return self::PATTERN;
