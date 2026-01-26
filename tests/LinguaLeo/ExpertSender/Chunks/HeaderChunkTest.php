@@ -17,7 +17,7 @@ class HeaderChunkTest extends TestCase
             ->onlyMethods(['getText'])
             ->disableOriginalConstructor()
             ->getMock();
-        $bodyChunk->expects($this->once())->method('getText')->will($this->returnValue('body'));
+        $bodyChunk->expects($this->once())->method('getText')->willReturn('body');
 
         $headerChunk = new HeaderChunk('api-key', $bodyChunk);
         $text = $headerChunk->getText();
