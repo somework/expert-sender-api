@@ -261,7 +261,7 @@ class AddUserToList
     {
         $this->exceptionIfFrozen();
 
-        if (strlen($trackingCode) > 20) {
+        if ($trackingCode !== null && strlen($trackingCode) > 20) {
             throw new \InvalidArgumentException('Tracking code is too long, max is 20 characters');
         }
 

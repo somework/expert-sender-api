@@ -137,7 +137,7 @@ class AddUserToListTest extends TestCase
         }
     }
 
-    public function provideMethodsValues(): array
+    public static function provideMethodsValues(): array
     {
         return [
             ['listId', null],
