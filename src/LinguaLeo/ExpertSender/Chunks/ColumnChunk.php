@@ -23,7 +23,7 @@ EOD;
      * @return string
      */
     #[\Override]
-    public function getText()
+    public function getText(): string
     {
         if (!$this->column->hasValue()) {
             return (new SimpleChunk('Column', $this->column->getName()))->getText();
