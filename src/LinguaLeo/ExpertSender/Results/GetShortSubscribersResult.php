@@ -17,7 +17,8 @@ class GetShortSubscribersResult extends ApiResult
      */
     protected $blackList = false;
 
-    public function buildData()
+    #[\Override]
+    public function buildData(): void
     {
         parent::buildData();
 

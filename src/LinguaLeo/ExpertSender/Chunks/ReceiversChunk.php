@@ -10,10 +10,8 @@ class ReceiversChunk extends ArrayChunk
 </Receivers>
 EOD;
 
-    /**
-     * @return string
-     */
-    protected function getPattern()
+    #[\Override]
+    protected function getPattern(): string
     {
         return self::PATTERN;
     }

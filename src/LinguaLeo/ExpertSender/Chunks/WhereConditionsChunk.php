@@ -10,10 +10,8 @@ class WhereConditionsChunk extends ArrayChunk
 </WhereConditions>
 EOD;
 
-    /**
-     * @return string
-     */
-    protected function getPattern()
+    #[\Override]
+    protected function getPattern(): string
     {
         return self::PATTERN;
     }

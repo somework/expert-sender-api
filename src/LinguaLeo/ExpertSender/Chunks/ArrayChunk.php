@@ -15,10 +15,7 @@ abstract class ArrayChunk implements ChunkInterface
         $this->chunks = $chunksArray;
     }
 
-    /**
-     * @param ChunkInterface $chunk
-     */
-    public function addChunk(ChunkInterface $chunk)
+    public function addChunk(ChunkInterface $chunk): void
     {
         $this->chunks[] = $chunk;
     }
@@ -26,7 +23,8 @@ abstract class ArrayChunk implements ChunkInterface
     /**
      * @return string
      */
-    public function getText()
+    #[\Override]
+    public function getText(): string
     {
         return $this->chunks ? sprintf($this->getPattern(), $this->getSubChunksText()) : '';
     }
@@ -34,7 +32,7 @@ abstract class ArrayChunk implements ChunkInterface
     /**
      * @return string
      */
-    protected function getSubChunksText()
+    protected function getSubChunksText(): string
     {
         $texts = [];
         foreach ($this->chunks as $columnChunk) {
@@ -48,5 +46,5 @@ abstract class ArrayChunk implements ChunkInterface
     /**
      * @return string
      */
-    abstract protected function getPattern();
+    abstract protected function getPattern(): string;
 }

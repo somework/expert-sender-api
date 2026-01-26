@@ -2,25 +2,26 @@
 
 namespace LinguaLeo\ExpertSender\Chunks;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class DataChunkTest extends TestCase
 {
-    public function testGetText()
+    public function testGetText(): void
     {
         /**
-         * @var SimpleChunk|\PHPUnit_Framework_MockObject_MockObject
-         * @var SimpleChunk|\PHPUnit_Framework_MockObject_MockObject $bodyChunk2
+         * @var SimpleChunk|MockObject
+         * @var SimpleChunk|MockObject $bodyChunk2
          */
         $bodyChunk1 = $this
             ->getMockBuilder(SimpleChunk::class)
-            ->setMethods(['getText'])
+            ->onlyMethods(['getText'])
             ->disableOriginalConstructor()
             ->getMock();
         $bodyChunk1->expects($this->once())->method('getText')->will($this->returnValue('data1'));
         $bodyChunk2 = $this
             ->getMockBuilder(SimpleChunk::class)
-            ->setMethods(['getText'])
+            ->onlyMethods(['getText'])
             ->disableOriginalConstructor()
             ->getMock();
         $bodyChunk2->expects($this->once())->method('getText')->will($this->returnValue('data2'));
@@ -30,8 +31,8 @@ class DataChunkTest extends TestCase
         $dataChunk->addChunk($bodyChunk2);
 
         $text = $dataChunk->getText();
-        $this->assertRegExp('~subscriber~', $text);
-        $this->assertRegExp('~data1~', $text);
-        $this->assertRegExp('~data2~', $text);
+        $this->assertMatchesRegularExpression('~subscriber~', $text);
+        $this->assertMatchesRegularExpression('~data1~', $text);
+        $this->assertMatchesRegularExpression('~data2~', $text);
     }
 }

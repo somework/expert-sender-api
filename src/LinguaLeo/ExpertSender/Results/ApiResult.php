@@ -6,15 +6,12 @@ use Psr\Http\Message\ResponseInterface;
 
 class ApiResult
 {
-    /**
-     * @var ResponseInterface
-     */
-    protected $response;
+    protected \Psr\Http\Message\ResponseInterface $response;
 
     /**
      * @var int
      */
-    protected $errorCode;
+    protected $errorCode = 0;
 
     /**
      * @var int
@@ -24,18 +21,16 @@ class ApiResult
     /**
      * @var string
      */
-    protected $errorMessage;
+    protected $errorMessage = '';
 
     public function __construct(ResponseInterface $response)
     {
         $this->response = $response;
         $this->responseCode = $this->response->getStatusCode();
-        $this->errorCode = 0;
-        $this->errorMessage = '';
         $this->buildData();
     }
 
-    public function isOk()
+    public function isOk(): bool
     {
         return
             ($this->responseCode >= 200) &&
@@ -75,7 +70,7 @@ class ApiResult
                 $this->errorCode = (int) $matches[1];
             }
             if (preg_match('~<Message>(.+)</Message>~', $content, $matches)) {
-                $this->errorMessage = (string) $matches[1];
+                $this->errorMessage = $matches[1];
             }
         } catch (\RuntimeException $exception) {
             $this->errorCode = 500;

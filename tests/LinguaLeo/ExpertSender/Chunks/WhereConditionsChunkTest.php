@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class WhereConditionsChunkTest extends TestCase
 {
-    public function testGetText()
+    public function testGetText(): void
     {
         $whereChunks = [
             new WhereChunk(new Where('name', ExpertSenderEnum::OPERATOR_EQUALS, 'Alex')),
@@ -16,13 +16,13 @@ class WhereConditionsChunkTest extends TestCase
         ];
         $whereConditionsChunk = new WhereConditionsChunk($whereChunks);
         $text = $whereConditionsChunk->getText();
-        $this->assertContains('<WhereConditions>', $text);
-        $this->assertContains('<Where>', $text);
-        $this->assertContains('<ColumnName>name</ColumnName>', $text);
-        $this->assertContains('<Operator>Equals</Operator>', $text);
-        $this->assertContains('<Value>Alex</Value>', $text);
-        $this->assertContains('<ColumnName>sex</ColumnName>', $text);
-        $this->assertContains('<Operator>Like</Operator>', $text);
-        $this->assertContains('<Value>1</Value>', $text);
+        $this->assertStringContainsString('<WhereConditions>', $text);
+        $this->assertStringContainsString('<Where>', $text);
+        $this->assertStringContainsString('<ColumnName>name</ColumnName>', $text);
+        $this->assertStringContainsString('<Operator>Equals</Operator>', $text);
+        $this->assertStringContainsString('<Value>Alex</Value>', $text);
+        $this->assertStringContainsString('<ColumnName>sex</ColumnName>', $text);
+        $this->assertStringContainsString('<Operator>Like</Operator>', $text);
+        $this->assertStringContainsString('<Value>1</Value>', $text);
     }
 }

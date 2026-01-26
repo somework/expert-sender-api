@@ -10,7 +10,8 @@ class ColumnsChunk extends ArrayChunk
 </Columns>
 EOD;
 
-    protected function getPattern()
+    #[\Override]
+    protected function getPattern(): string
     {
         return self::PATTERN;
     }

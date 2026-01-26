@@ -11,12 +11,11 @@ class ListResult extends ApiResult
     /**
      * @var array|EsList[]
      */
-    private $lists;
+    private array $lists = [];
 
     public function __construct(ResponseInterface $response)
     {
         parent::__construct($response);
-        $this->lists = [];
         $this->parse();
     }
 

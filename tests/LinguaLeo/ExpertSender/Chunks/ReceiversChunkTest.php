@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class ReceiversChunkTest extends TestCase
 {
-    public function testGetText()
+    public function testGetText(): void
     {
         $receiverChunks = [
             new ReceiverChunk(new Receiver('simple@email.com')),
@@ -19,8 +19,8 @@ class ReceiversChunkTest extends TestCase
 
         $text = $receiversChunk->getText();
 
-        $this->assertRegExp('~<Id>100</Id>~', $text);
-        $this->assertRegExp('~<Email>simple@email.com</Email>~', $text);
-        $this->assertRegExp('~<Id>200</Id>[\s]+<Email>another@email.com</Email>~', $text);
+        $this->assertMatchesRegularExpression('~<Id>100</Id>~', $text);
+        $this->assertMatchesRegularExpression('~<Email>simple@email.com</Email>~', $text);
+        $this->assertMatchesRegularExpression('~<Id>200</Id>[\s]+<Email>another@email.com</Email>~', $text);
     }
 }

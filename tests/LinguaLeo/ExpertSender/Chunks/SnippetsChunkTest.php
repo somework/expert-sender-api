@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class SnippetsChunkTest extends TestCase
 {
-    public function testGetText()
+    public function testGetText(): void
     {
         $snippetChunks = [
             new SnippetChunk(new Snippet('test', 'value')),
@@ -18,7 +18,7 @@ class SnippetsChunkTest extends TestCase
 
         $text = $receiversChunk->getText();
 
-        $this->assertRegExp('~<Name>test</Name>[\s]+<Value>value</Value>~', $text);
-        $this->assertRegExp('~<Name>cdata</Name>[\s]+<Value>[\s\S]+CDATA[\s\S]+<tag>ok</tag>[\s\S]+</Value>~', $text);
+        $this->assertMatchesRegularExpression('~<Name>test</Name>[\s]+<Value>value</Value>~', $text);
+        $this->assertMatchesRegularExpression('~<Name>cdata</Name>[\s]+<Value>[\s\S]+CDATA[\s\S]+<tag>ok</tag>[\s\S]+</Value>~', $text);
     }
 }

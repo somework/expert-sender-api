@@ -8,12 +8,9 @@ use PHPUnit\Framework\TestCase;
 
 class AddUserToListTest extends TestCase
 {
-    /**
-     * @var AddUserToList
-     */
-    private $request;
+    private \LinguaLeo\ExpertSender\Request\AddUserToList $request;
 
-    public function testDefaultValues()
+    public function testDefaultValues(): void
     {
         $this->assertFalse($this->request->isValid());
         $this->assertFalse($this->request->isFrozen());
@@ -38,7 +35,7 @@ class AddUserToListTest extends TestCase
      * @param $field
      * @param $value
      */
-    public function testValuesAreSet($field, $value)
+    public function testValuesAreSet(string $field, int|string|bool|array|null $value): void
     {
         $setter = 'set'.ucfirst($field);
         $getter = 'get'.ucfirst($field);
@@ -48,15 +45,13 @@ class AddUserToListTest extends TestCase
         $this->assertSame($value, $this->request->$getter());
     }
 
-    /**
-     * @expectedException \BadMethodCallException
-     */
-    public function testCannotBeFrozenWhenInvalid()
+    public function testCannotBeFrozenWhenInvalid(): void
     {
+        $this->expectException(\BadMethodCallException::class);
         $this->request->freeze();
     }
 
-    public function testIsValidWithMinimalSetup()
+    public function testIsValidWithMinimalSetup(): void
     {
         $this->request->setListId(1);
         $this->request->setEmail('test@test.com');
@@ -70,13 +65,14 @@ class AddUserToListTest extends TestCase
     /**
      * @depends      testIsValidWithMinimalSetup
      * @dataProvider provideMethodsValues
-     * @expectedException \BadMethodCallException
      *
      * @param $field
      * @param $value
      */
-    public function testCannotBeChangedWhenFrozen($field, $value)
+    public function testCannotBeChangedWhenFrozen(string $field, int|string|bool|array|null $value): void
     {
+        $this->expectException(\BadMethodCallException::class);
+
         // minimal setup
         $this->request->setListId(1);
         $this->request->setEmail('test@example.com');
@@ -88,7 +84,7 @@ class AddUserToListTest extends TestCase
         $this->request->$setter($value);
     }
 
-    public function testResetProperties()
+    public function testResetProperties(): void
     {
         $this->request->setProperties([]);
         $this->assertEquals([], $this->request->getProperties());
@@ -98,7 +94,7 @@ class AddUserToListTest extends TestCase
         $this->assertEquals([], $this->request->getProperties());
     }
 
-    public function testAddProperty()
+    public function testAddProperty(): void
     {
         $properties = [
             new Property(1, 1, 1),
@@ -113,7 +109,7 @@ class AddUserToListTest extends TestCase
         $this->assertSame($properties, $this->request->getProperties());
     }
 
-    public function testSetProperties()
+    public function testSetProperties(): void
     {
         $properties = [
             new Property(1, 1, 1),
@@ -126,15 +122,13 @@ class AddUserToListTest extends TestCase
         $this->assertSame($properties, $this->request->getProperties());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInvalidModeCannotBeSet()
+    public function testInvalidModeCannotBeSet(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->request->setMode('invalid_mode');
     }
 
-    public function testValidModesCanBeSet()
+    public function testValidModesCanBeSet(): void
     {
         foreach (ExpertSenderEnum::getModes() as $mode) {
             $this->request->setMode($mode);
@@ -143,10 +137,7 @@ class AddUserToListTest extends TestCase
         }
     }
 
-    /**
-     * @return array
-     */
-    public function provideMethodsValues()
+    public static function provideMethodsValues(): array
     {
         return [
             ['listId', null],
@@ -188,7 +179,8 @@ class AddUserToListTest extends TestCase
         ];
     }
 
-    protected function setUp()
+    #[\Override]
+    protected function setUp(): void
     {
         $this->request = new AddUserToList();
     }

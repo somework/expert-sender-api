@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ruleset name="Expert Sender API">
+    <description>Custom PHPMD ruleset for the Expert Sender API.</description>
+
+    <rule ref="rulesets/cleancode.xml">
+        <exclude name="BooleanArgumentFlag" />
+        <exclude name="MissingImport" />
+        <exclude name="StaticAccess" />
+    </rule>
+    <rule ref="rulesets/codesize.xml">
+        <exclude name="CyclomaticComplexity" />
+        <exclude name="NPathComplexity" />
+    </rule>
+    <rule ref="rulesets/design.xml">
+        <exclude name="CouplingBetweenObjects" />
+    </rule>
+    <rule ref="rulesets/naming.xml">
+        <exclude name="BooleanGetMethodName" />
+        <exclude name="LongVariable" />
+        <exclude name="ShortVariable" />
+    </rule>
+    <rule ref="rulesets/unusedcode.xml" />
+</ruleset>
