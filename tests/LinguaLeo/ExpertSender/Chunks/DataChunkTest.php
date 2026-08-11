@@ -18,13 +18,13 @@ class DataChunkTest extends TestCase
             ->onlyMethods(['getText'])
             ->disableOriginalConstructor()
             ->getMock();
-        $bodyChunk1->expects($this->once())->method('getText')->will($this->returnValue('data1'));
+        $bodyChunk1->expects($this->once())->method('getText')->willReturn('data1');
         $bodyChunk2 = $this
             ->getMockBuilder(SimpleChunk::class)
             ->onlyMethods(['getText'])
             ->disableOriginalConstructor()
             ->getMock();
-        $bodyChunk2->expects($this->once())->method('getText')->will($this->returnValue('data2'));
+        $bodyChunk2->expects($this->once())->method('getText')->willReturn('data2');
 
         $dataChunk = new DataChunk('subscriber');
         $dataChunk->addChunk($bodyChunk1);

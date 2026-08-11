@@ -4,6 +4,8 @@ namespace LinguaLeo\ExpertSender\Request;
 
 use LinguaLeo\ExpertSender\Entities\Property;
 use LinguaLeo\ExpertSender\ExpertSenderEnum;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 class AddUserToListTest extends TestCase
@@ -29,12 +31,7 @@ class AddUserToListTest extends TestCase
         $this->assertEquals([], $this->request->getProperties());
     }
 
-    /**
-     * @dataProvider provideMethodsValues
-     *
-     * @param $field
-     * @param $value
-     */
+    #[DataProvider('provideMethodsValues')]
     public function testValuesAreSet(string $field, int|string|bool|array|null $value): void
     {
         $setter = 'set'.ucfirst($field);
@@ -62,13 +59,8 @@ class AddUserToListTest extends TestCase
         $this->request->freeze();
     }
 
-    /**
-     * @depends      testIsValidWithMinimalSetup
-     * @dataProvider provideMethodsValues
-     *
-     * @param $field
-     * @param $value
-     */
+    #[Depends('testIsValidWithMinimalSetup')]
+    #[DataProvider('provideMethodsValues')]
     public function testCannotBeChangedWhenFrozen(string $field, int|string|bool|array|null $value): void
     {
         $this->expectException(\BadMethodCallException::class);
